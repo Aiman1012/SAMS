@@ -36,6 +36,8 @@ class Presiden extends CI_Controller
         $this->load->view('templates_presiden/footer');
     }
 
+
+
     public function mohonProgram()
     {
         $data['title'] = 'Mohon Program';
@@ -147,7 +149,7 @@ class Presiden extends CI_Controller
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 			  <span aria-hidden="true">&times;</span>
 			</button>
-		  </div>');
+		    </div>');
             redirect('presiden');
         }
     }

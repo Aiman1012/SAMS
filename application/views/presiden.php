@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title"><a href="<?= base_url('presiden/mohonProgram') ?>" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i>Mohon Program</a></h3>
+        <h3 class="card-title"><a href="<?= base_url('presiden/mohonProgram') ?>" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Mohon Program</a></h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -26,7 +26,7 @@
                         <td><?= $prog->nama_program ?></td>
                         <td><?= $prog->kategori_program ?></td>
                         <td>Successful</td>
-                        <td><a href="<?= base_url('presiden/lihatProgram/' . $prog->program_id) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Lihat Program</a></td>
+                        <td><a href="<?= base_url('presiden/lihatProgram/' . $prog->program_id) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> Lihat Program</a></td>
                         <td class="text-center"><button data-toggle="modal" data-target="#edit<?= $prog->program_id ?>" class=" btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                             <a href="<?= base_url('presiden/deleteProgram/' . $prog->program_id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>
                         </td>
@@ -36,6 +36,8 @@
         </table>
     </div>
 </div>
+
+
 
 
 <!-- Modal -->
@@ -50,7 +52,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url('presiden/edit/' . $prog->program_id) ?>" method="POST" enctype="multipart/form-data">
+                    <form action="<?= base_url('presiden/edit/' . $prog->program_id) ?>" method="POST">
                         <div class="form-group">
                             <label for="">Nama Kelab</label>
                             <input type="text" name="nama_kelab" class="form-control" value="<?= $prog->nama_kelab ?>">

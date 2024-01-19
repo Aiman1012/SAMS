@@ -1,20 +1,68 @@
-<div>
-    <h2>Program Details</h2>
+<div class="container">
+    <h2 class="mt-4 mb-4">Program Details</h2>
     <?php foreach ($program as $prog) : ?>
-        <p><strong>Nama Kelab:</strong> <?= htmlspecialchars($prog->nama_kelab) ?></p>
-        <p><strong>Nama Program:</strong> <?= htmlspecialchars($prog->nama_program) ?></p>
-        <p><strong>Nama Pengarah:</strong> <?= htmlspecialchars($prog->nama_pengarah) ?></p>
-        <p><strong>Nama Anjuran:</strong> <?= htmlspecialchars($prog->nama_anjuran) ?></p>
-        <p><strong>Kategori Program:</strong> <?= htmlspecialchars($prog->kategori_program) ?></p>
-        <p><strong>Tarikh Mula:</strong> <?= htmlspecialchars($prog->tarikh_mula) ?></p>
-        <p><strong>Tarikh Tamat:</strong> <?= htmlspecialchars($prog->tarikh_tamat) ?></p>
-        <p><strong>Objektif Program:</strong> <?= htmlspecialchars($prog->objektif_program) ?></p>
-        <p><strong>Tempat Program:</strong> <?= htmlspecialchars($prog->tempat_program) ?></p>
-        <p><strong>Masa Program:</strong> <?= htmlspecialchars($prog->masa_program) ?></p>
-        <p><strong>Negeri Program:</strong> <?= htmlspecialchars($prog->negeri_program) ?></p>
-        <p><strong>Dokumen Program:</strong> <a href="<?= base_url('' . $prog->dokumen_program) ?>" target="_blank"><?= $prog->dokumen_program ?></a></p>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th scope="row">Nama Kelab</th>
+                    <td><?= htmlspecialchars($prog->nama_kelab) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Nama Program</th>
+                    <td><?= htmlspecialchars($prog->nama_program) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Nama Pengarah</th>
+                    <td><?= htmlspecialchars($prog->nama_pengarah) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Nama Anjuran</th>
+                    <td><?= htmlspecialchars($prog->nama_anjuran) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Kategori Program</th>
+                    <td><?= htmlspecialchars($prog->kategori_program) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Tarikh Mula</th>
+                    <td><?= htmlspecialchars($prog->tarikh_mula) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Tarikh Tamat</th>
+                    <td><?= htmlspecialchars($prog->tarikh_tamat) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Objektif Program</th>
+                    <td><?= htmlspecialchars($prog->objektif_program) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Tempat Program</th>
+                    <td><?= htmlspecialchars($prog->tempat_program) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Masa Program</th>
+                    <td><?= htmlspecialchars($prog->masa_program) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Negeri Program</th>
+                    <td><?= htmlspecialchars($prog->negeri_program) ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Dokumen Program</th>
+                    <td>
+                        <a href="<?= base_url($prog->dokumen_program) ?>" target="_blank">
+                            <?= htmlspecialchars($prog->dokumen_program) ?>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     <?php endforeach ?>
     <div class="card-header">
-        <h3 class="card-title"><a href="<?= base_url('presiden') ?>" class="btn btn-danger btn-sm"><i class="fas fa-back"></i>Go Back</a></h3>
+        <h3 class="card-title">
+            <a href="<?= base_url('presiden') ?>" class="btn btn-danger btn-sm">
+                <i class="fas fa-back"></i> Go Back
+            </a>
+        </h3>
     </div>
 </div>
