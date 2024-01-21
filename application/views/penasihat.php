@@ -1,3 +1,5 @@
+<?= $this->session->flashdata('message'); ?>
+
 <div class="card">
     <!-- /.card-header -->
     <div class="title">
@@ -11,7 +13,7 @@
                     <th>Nama Program</th>
                     <th>Kategori Program</th>
                     <th>Status Program</th>
-                    <th>Kelulusan Program</th>
+                    <th>Lihat Program</th>
                 </tr>
             </thead>
             <?php $no = 1;
@@ -21,9 +23,8 @@
                         <td><?= $no++ ?></td>
                         <td><?= $prog->nama_program ?></td>
                         <td><?= $prog->kategori_program ?></td>
-                        <td>Successful</td>
+                        <td><?= $prog->approval_status ?></td>
                         <td><a href="<?= base_url('penasihat/approveProgram/' . $prog->program_id) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Kelulusan Program</a></td>
-
                     </tr>
                 </tbody>
             <?php endforeach ?>

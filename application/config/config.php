@@ -25,6 +25,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 $config['base_url'] = 'http://localhost/SAMS/';
 
+$config['sess_driver'] = 'files';
+
 /*
 |--------------------------------------------------------------------------
 | Index File

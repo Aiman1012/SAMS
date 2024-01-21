@@ -20,6 +20,7 @@ class Presiden extends CI_Controller
         $this->load->view('templates_presiden/sidebar', $data);
         $this->load->view('presiden', $data);
         $this->load->view('templates_presiden/footer');
+        var_dump($this->session->userdata('role'));
     }
 
     public function lihatProgram($program_id)
@@ -104,7 +105,8 @@ class Presiden extends CI_Controller
                 'tempat_program' => $this->input->post('tempat_program'),
                 'masa_program' => $this->input->post('masa_program'),
                 'negeri_program' => $this->input->post('negeri_program'),
-                'dokumen_program' => $this->input->post('dokumen_program')
+                'dokumen_program' => $this->input->post('dokumen_program'),
+                'approval_status' => 'Pending'
             );
 
 
