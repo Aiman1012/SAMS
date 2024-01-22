@@ -28,8 +28,9 @@
                         <td><?= $prog->approval_status ?></td>
                         <td><a href="<?= base_url('presiden/lihatProgram/' . $prog->program_id) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> Lihat Program</a></td>
                         <td class="text-center">
-                            <button data-toggle="modal" data-target="#edit<?= $prog->program_id ?>" class=" btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                            <button data-toggle="modal" data-target="#edit<?= $prog->program_id ?>" class=" btn btn-warning btn-sm"><i class="fas fa-edit"></i>Edit</button>
                             <a href="<?= base_url('presiden/deleteProgram/' . $prog->program_id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>
+                            <a href="<?= base_url('presiden/cancelProgram/' . $prog->program_id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to cancel the program?')"><i class="fas fa-exclamation-circle"></i> Cancel</a>
                         </td>
                     </tr>
                 </tbody>
@@ -68,6 +69,11 @@
                             <label for="">Nama Pengarah</label>
                             <input type="text" name="nama_pengarah" class="form-control" value="<?= $prog->nama_pengarah ?>">
                             <?= form_error('nama_pengarah', '<div class="text-small text-danger">', '</div>'); ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nombor Matriks Pengarah Program</label>
+                            <input type="text" name="pengarah_matric" class="form-control" value="<?= $prog->pengarah_matric ?>">
+                            <?= form_error('pengarah_matric', '<div class="text-small text-danger">', '</div>'); ?>
                         </div>
                         <div class="form-group">
                             <label for="">Nama Anjuran</label>

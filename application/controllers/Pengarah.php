@@ -18,15 +18,26 @@ class Pengarah extends CI_Controller
         $data['title'] = 'Pengarah Program';
         $data['pageName'] = 'Senarai Program';
 
-        $data['program'] = $this->program_model->getData('tbl_program')->result();
+        // Retrieve Pengarah's matric number from the session
+        $pengarahMatric = $this->session->userdata('pengarah_matric');
 
-        $this->load->view('templates_pengarah/header', $data);
-        $this->load->view('templates_pengarah/sidebar', $data);
-        $this->load->view('pengarah', $data);
-        $this->load->view('templates_pengarah/footer');
-        var_dump($this->session->userdata('role'));
-        var_dump($this->session->userdata('pengarah_matric'));
+        if (!empty($pengarahMatric)) {
+            // Fetch only the programs assigned to the logged-in Pengarah
+            $data['program'] = $this->program_model->getAssignedPrograms($pengarahMatric)->result();
+
+            $this->load->view('templates_pengarah/header', $data);
+            $this->load->view('templates_pengarah/sidebar', $data);
+            $this->load->view('pengarah', $data);
+            $this->load->view('templates_pengarah/footer');
+            var_dump($this->session->userdata('role'));
+            var_dump($this->session->userdata('pengarah_matric'));
+        } else {
+            // Handle the case when Pengarah's matric is not found in the session
+            echo "Pengarah's matric not found in session.";
+        }
     }
+
+
 
     public function lihatProgram($program_id)
     {
@@ -102,5 +113,27 @@ class Pengarah extends CI_Controller
                     </div>');
             redirect('pengarah');
         }
+    }
+
+    public function cancelProgram($program_id)
+    {
+        // Retrieve program details
+        $programDetails = $this->program_model->getProgramById(['program_id' => $program_id], 'tbl_program')->row();
+        // Modify the approval status or other fields as needed
+        $programDetails->approval_status = 'Cancelled';
+
+        // Update the record in the database
+        $this->program_model->updateProgram((array) $programDetails, 'tbl_program');
+
+        // Set flashdata message indicating the program has been cancelled
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Program has been cancelled!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+
+
+        redirect('pengarah');
     }
 }

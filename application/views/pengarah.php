@@ -15,6 +15,7 @@
                     <th>Tarikh Tamat</th>
                     <th>Status Program</th>
                     <th>Lihat Program</th>
+                    <th>Cancel Program</th>
                 </tr>
             </thead>
             <?php $no = 1;
@@ -27,6 +28,7 @@
                         <td><?= $prog->tarikh_tamat ?></td>
                         <td><?= $prog->approval_status ?></td>
                         <td><a href="<?= base_url('pengarah/lihatProgram/' . $prog->program_id) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Lihat Program</a></td>
+                        <td><a href="<?= base_url('pengarah/cancelProgram/' . $prog->program_id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to cancel the program?')"><i class="fas fa-exclamation-circle"></i> Cancel</a></td>
                     </tr>
                 </tbody>
             <?php endforeach ?>

@@ -60,6 +60,9 @@ class Presiden extends CI_Controller
         $this->form_validation->set_rules('nama_pengarah', 'Nama Pengarah', 'required', array(
             'required' => "%s harus diisi"
         ));
+        $this->form_validation->set_rules('pengarah_matric', 'No Matriks', 'required', array(
+            'required' => "%s harus diisi"
+        ));
         $this->form_validation->set_rules('kategori_program', 'Kategori Program', 'required', array(
             'required' => "%s harus diisi"
         ));
@@ -97,6 +100,7 @@ class Presiden extends CI_Controller
                 'nama_kelab' => $this->input->post('nama_kelab'),
                 'nama_program' => $this->input->post('nama_program'),
                 'nama_pengarah' => $this->input->post('nama_pengarah'),
+                'pengarah_matric' => $this->input->post('pengarah_matric'),
                 'nama_anjuran' => $this->input->post('nama_anjuran'),
                 'kategori_program' => $this->input->post('kategori_program'),
                 'tarikh_mula' => $this->input->post('tarikh_mula'),
@@ -133,6 +137,7 @@ class Presiden extends CI_Controller
                 'nama_kelab' => $this->input->post('nama_kelab'),
                 'nama_program' => $this->input->post('nama_program'),
                 'nama_pengarah' => $this->input->post('nama_pengarah'),
+                'pengarah_matric' => $this->input->post('pengarah_matric'),
                 'nama_anjuran' => $this->input->post('nama_anjuran'),
                 'kategori_program' => $this->input->post('kategori_program'),
                 'tarikh_mula' => $this->input->post('tarikh_mula'),
@@ -167,6 +172,28 @@ class Presiden extends CI_Controller
 			<span aria-hidden="true">&times;</span>
 			</button>
 			</div>');
+        redirect('presiden');
+    }
+
+    public function cancelProgram($program_id)
+    {
+        // Retrieve program details
+        $programDetails = $this->program_model->getProgramById(['program_id' => $program_id], 'tbl_program')->row();
+        // Modify the approval status or other fields as needed
+        $programDetails->approval_status = 'Cancelled';
+
+        // Update the record in the database
+        $this->program_model->updateProgram((array) $programDetails, 'tbl_program');
+
+        // Set flashdata message indicating the program has been cancelled
+        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Program has been cancelled!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+
+
         redirect('presiden');
     }
 }

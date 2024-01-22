@@ -43,42 +43,7 @@ class Hepa extends CI_Controller
         var_dump($this->session->userdata('role'));
     }
 
-    public function lulusProgram($program_id)
-    {
-        // Retrieve program details
-        $programDetails = $this->hepa_model->getProgramById(['program_id' => $program_id], 'tbl_program')->row();
-
-        // Check if the program has already been approved
-        if ($programDetails->approval_status === 'Approved') {
-            // Set flashdata message indicating the program is already approved
-            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-            Program has already been approved!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>');
-        } else {
-            // Modify the approval status or other fields as needed
-            $programDetails->approval_status = 'Approved';
-
-            // Update the record in the database
-            $this->hepa_model->updateProgram((array) $programDetails, 'tbl_program');
-
-            // Set flashdata message indicating the program has been approved
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Program has been approved!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>');
-        }
-
-        redirect('hepa');
-    }
-
-
-
-    public function _rule()
+    public function _ruleReject()
     {
         $this->form_validation->set_rules('program_notes', 'Nota Program', 'required', array(
             'required' => "%s harus diisi"
@@ -89,7 +54,7 @@ class Hepa extends CI_Controller
     public function rejectProgram($program_id)
     {
         // Your logic to update approval status to 'Rejected'
-        $this->_rule();
+        $this->_ruleReject();
 
         if (
             $this->form_validation->run()  == FALSE
@@ -113,6 +78,60 @@ class Hepa extends CI_Controller
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>');
+            redirect('hepa');
+        }
+    }
+
+    public function _rulePengarah()
+    {
+        $this->form_validation->set_rules('pengarah_matric', 'No Matriks', 'required', array(
+            'required' => "%s harus diisi"
+        ));
+    }
+
+    public function assignPengarah($program_id)
+    {
+        $this->_rulePengarah();
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->index();
+        } else {
+            // Retrieve program details
+            $programDetails = $this->hepa_model->getProgramById(['program_id' => $program_id], 'tbl_program')->row();
+
+            // Check if the program has already been approved
+            if ($programDetails->approval_status === 'Approved') {
+                // Set flashdata message indicating the program is already approved
+                $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Program has already been approved!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+            } else {
+                // Modify the approval status or other fields as needed
+                $programDetails->approval_status = 'Approved';
+
+                // Update the record in the database
+                $this->hepa_model->updateProgram((array) $programDetails, 'tbl_program');
+
+                // Assign the Pengarah
+                $data = array(
+                    'program_id' => $program_id,
+                    'pengarah_matric' => $this->input->post('pengarah_matric')
+                );
+
+                $this->hepa_model->updateProgram($data, 'tbl_program');
+
+                // Set flashdata message indicating the program has been approved and Pengarah assigned
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Program has been approved and Pengarah assigned!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+            }
+
             redirect('hepa');
         }
     }

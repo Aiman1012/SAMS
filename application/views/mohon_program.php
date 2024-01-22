@@ -15,6 +15,11 @@
         <?= form_error('nama_pengarah', '<div class="text-small text-danger">', '</div>'); ?>
     </div>
     <div class="form-group">
+        <label for="">Nombor Matriks Pengarah Program</label>
+        <input type="text" name="pengarah_matric" class="form-control" value="<?= $prog->pengarah_matric ?>">
+        <?= form_error('pengarah_matric', '<div class="text-small text-danger">', '</div>'); ?>
+    </div>
+    <div class="form-group">
         <label for="">Nama Anjuran</label>
         <input type="text" name="nama_anjuran" class="form-control">
         <?= form_error('nama_anjuran', '<div class="text-small text-danger">', '</div>'); ?>

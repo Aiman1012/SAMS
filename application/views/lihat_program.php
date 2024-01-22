@@ -16,6 +16,10 @@
                     <td><?= htmlspecialchars($prog->nama_pengarah) ?></td>
                 </tr>
                 <tr>
+                    <th class="bg-info" scope="row">No Matriks Pengarah Program</th>
+                    <td><?= htmlspecialchars($prog->pengarah_matric) ?></td>
+                </tr>
+                <tr>
                     <th class="bg-info" scope="row">Nama Anjuran</th>
                     <td><?= htmlspecialchars($prog->nama_anjuran) ?></td>
                 </tr>

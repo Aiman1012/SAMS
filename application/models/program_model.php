@@ -28,4 +28,11 @@ class program_model extends CI_Model
         $this->db->where($where);
         $this->db->delete($table);
     }
+    public function getAssignedPrograms($pengarahMatric)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_program');
+        $this->db->where('pengarah_matric', $pengarahMatric); // Assuming you have a column for pengarah_matric in tbl_program
+        return $this->db->get();
+    }
 }
