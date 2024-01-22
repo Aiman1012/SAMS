@@ -25,15 +25,15 @@
         <div class="text-center">
             <?php if ($this->session->userdata('role') === 'penasihat' && (($prog->approval_status == 'Pending') || ($prog->approval_status == 'Rejected by Penasihat'))) : ?>
                 <!-- Buttons for Program Approval/Rejection for Penasihat -->
-                <a href="<?= base_url('penasihat/lulusProgram/' . $prog->program_id) ?>" class="btn btn-success btn-sm">Penasihat Approve Program</a>
+                <a href="<?= base_url('penasihat/lulusProgram/' . $prog->program_id) ?>" class="btn btn-success btn-sm">Approve Program</a>
                 <button data-toggle="modal" data-target="#reject<?= $prog->program_id ?>" class=" btn btn-danger btn-sm">Reject Program</button>
             <?php elseif ($this->session->userdata('role') === 'mpp' && (($prog->approval_status == 'Pending MPP Approval') || ($prog->approval_status == 'Rejected by MPP'))) : ?>
                 <!-- Buttons for Program Approval/Rejection for MPP -->
-                <a href="<?= base_url('mpp/lulusProgram/' . $prog->program_id) ?>" class="btn btn-success btn-sm">MPP Approve Program</a>
+                <a href="<?= base_url('mpp/lulusProgram/' . $prog->program_id) ?>" class="btn btn-success btn-sm">Approve Program</a>
                 <button data-toggle="modal" data-target="#reject<?= $prog->program_id ?>" class=" btn btn-danger btn-sm">Reject Program</button>
-            <?php elseif ($this->session->userdata('role') === 'hepa' && (($prog->approval_status == 'Pending HEPA Approval') || ($prog->approval_status == 'Rejected by HEPA'))) : ?>
+            <?php elseif ($this->session->userdata('role') === 'hepa' && (($prog->approval_status == 'Pending HEPA Approval') || ($prog->approval_status == 'Rejected by HEPA')) || ($prog->approval_status == 'Edit Request Sent')) : ?>
                 <!-- Buttons for Program Approval/Rejection for HEPA -->
-                <a href="<?= base_url('hepa/lulusProgram/' . $prog->program_id) ?>" class="btn btn-success btn-sm">HEPA Approve Program</a>
+                <a href="<?= base_url('hepa/lulusProgram/' . $prog->program_id) ?>" class="btn btn-success btn-sm">Approve Program</a>
                 <button data-toggle="modal" data-target="#reject<?= $prog->program_id ?>" class=" btn btn-danger btn-sm">Reject Program</button>
             <?php endif; ?>
         </div>

@@ -20,6 +20,7 @@
 </div>
 <!-- ./wrapper -->
 
+
 <!-- jQuery -->
 <script src="<?= base_url('assets/templateadminlte', null) ?>/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

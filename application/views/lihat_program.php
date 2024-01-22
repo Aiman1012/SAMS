@@ -55,6 +55,7 @@
                         </a>
                     </td>
                 </tr>
+
                 <tr>
                     <th class="bg-info" scope="row">Status Program</th>
                     <td><?= htmlspecialchars($prog->approval_status) ?></td>
