@@ -115,8 +115,20 @@
                             <?= form_error('masa_program', '<div class="text-small text-danger">', '</div>'); ?>
                         </div>
                         <div class="form-group">
-                            <label for="">Negeri Program</label>
-                            <input type="text" name="negeri_program" class="form-control" value="<?= $prog->negeri_program ?>">
+                            <label for="negeri_program">Negeri Program</label>
+                            <select name="negeri_program" class="form-control">
+                                <?php
+                                $states = [
+                                    'Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan',
+                                    'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 'Sarawak',
+                                    'Selangor', 'Terengganu', 'Kuala Lumpur', 'Labuan', 'Putrajaya'
+                                ];
+                                foreach ($states as $state) {
+                                    $selected = ($prog->negeri_program == $state) ? 'selected' : '';
+                                    echo "<option value=\"$state\" $selected>$state</option>";
+                                }
+                                ?>
+                            </select>
                             <?= form_error('negeri_program', '<div class="text-small text-danger">', '</div>'); ?>
                         </div>
                         <div class="form-group">

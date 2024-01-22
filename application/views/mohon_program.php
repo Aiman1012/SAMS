@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         <label for="">Nombor Matriks Pengarah Program</label>
-        <input type="text" name="pengarah_matric" class="form-control" value="<?= $prog->pengarah_matric ?>">
+        <input type="text" name="pengarah_matric" class="form-control">
         <?= form_error('pengarah_matric', '<div class="text-small text-danger">', '</div>'); ?>
     </div>
     <div class="form-group">
@@ -59,8 +59,26 @@
         <?= form_error('masa_program', '<div class="text-small text-danger">', '</div>'); ?>
     </div>
     <div class="form-group">
-        <label for="">Negeri Program</label>
-        <input type="text" name="negeri_program" class="form-control">
+        <label for="negeri_program">Negeri Program</label>
+        <select name="negeri_program" class="form-control">
+            <option value="" selected disabled>Select State</option>
+            <option value="Johor">Johor</option>
+            <option value="Kedah">Kedah</option>
+            <option value="Kelantan">Kelantan</option>
+            <option value="Melaka">Melaka</option>
+            <option value="Negeri Sembilan">Negeri Sembilan</option>
+            <option value="Pahang">Pahang</option>
+            <option value="Penang">Penang</option>
+            <option value="Perak">Perak</option>
+            <option value="Perlis">Perlis</option>
+            <option value="Sabah">Sabah</option>
+            <option value="Sarawak">Sarawak</option>
+            <option value="Selangor">Selangor</option>
+            <option value="Terengganu">Terengganu</option>
+            <option value="Kuala Lumpur">Kuala Lumpur</option>
+            <option value="Labuan">Labuan</option>
+            <option value="Putrajaya">Putrajaya</option>
+        </select>
         <?= form_error('negeri_program', '<div class="text-small text-danger">', '</div>'); ?>
     </div>
     <div class="form-group">
