@@ -78,19 +78,42 @@ class Hepa extends CI_Controller
 
 
 
+    public function _rule()
+    {
+        $this->form_validation->set_rules('program_notes', 'Nota Program', 'required', array(
+            'required' => "%s harus diisi"
+        ));
+    }
+
+
     public function rejectProgram($program_id)
     {
         // Your logic to update approval status to 'Rejected'
-        $data = array(
-            'approval_status' => 'Rejected'
-        );
+        $this->_rule();
 
-        // Update the program status to 'Rejected'
-        $this->hepa_model->updateProgram($data, 'tbl_program', $program_id);
+        if (
+            $this->form_validation->run()  == FALSE
+        ) {
+            $this->index();
+        } else {
+            $data = array(
+                'program_id' => $program_id,
+                'approval_status' => 'Rejected by HEPA',
+                'program_notes' => $this->input->post('program_notes')
+            );
 
-        // Notify Club President (you need to implement the notification logic)
+            // Update the program status to 'Rejected'
+            $this->hepa_model->updateProgram($data, 'tbl_program');
 
-        $this->session->set_flashdata('message', 'Program rejected and notification sent to Club President.');
-        redirect('hepa');
+            // Notify Club President (you need to implement the notification logic)
+
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Program has been rejected!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+            redirect('hepa');
+        }
     }
 }

@@ -27,7 +27,8 @@
                         <td><?= $prog->kategori_program ?></td>
                         <td><?= $prog->approval_status ?></td>
                         <td><a href="<?= base_url('presiden/lihatProgram/' . $prog->program_id) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> Lihat Program</a></td>
-                        <td class="text-center"><button data-toggle="modal" data-target="#edit<?= $prog->program_id ?>" class=" btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
+                        <td class="text-center">
+                            <button data-toggle="modal" data-target="#edit<?= $prog->program_id ?>" class=" btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
                             <a href="<?= base_url('presiden/deleteProgram/' . $prog->program_id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>

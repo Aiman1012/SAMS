@@ -7,9 +7,9 @@ class Dashboard extends CI_Controller
     {
         $data['title'] = 'Presiden Kelab';
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('dashboard', $data);
-        $this->load->view('templates/footer');
+        $this->load->view('templates_hepa/header', $data);
+        $this->load->view('templates_hepa/sidebar', $data);
+        $this->load->view('dashboardkelab', $data);
+        $this->load->view('templates_hepa/footer');
     }
 }
