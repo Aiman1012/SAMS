@@ -5,68 +5,68 @@
             <tbody>
                 <tr>
                     <th class="bg-info" scope="row">Nama Kelab</th>
-                    <td><?= htmlspecialchars($prog->nama_kelab) ?></td>
+                    <td><?= htmlspecialchars($prog->NAMA_KELAB) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nama Program</th>
-                    <td><?= htmlspecialchars($prog->nama_program) ?></td>
+                    <td><?= htmlspecialchars($prog->NAMA_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nama Pengarah</th>
-                    <td><?= htmlspecialchars($prog->nama_pengarah) ?></td>
+                    <td><?= htmlspecialchars($prog->NAMA_PENGARAH) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">No Matriks Pengarah Program</th>
-                    <td><?= htmlspecialchars($prog->pengarah_matric) ?></td>
+                    <td><?= htmlspecialchars($prog->PENGARAH_MATRIC) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nama Anjuran</th>
-                    <td><?= htmlspecialchars($prog->nama_anjuran) ?></td>
+                    <td><?= htmlspecialchars($prog->NAMA_ANJURAN) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Kategori Program</th>
-                    <td><?= htmlspecialchars($prog->kategori_program) ?></td>
+                    <td><?= htmlspecialchars($prog->KATEGORI_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Tarikh Mula</th>
-                    <td><?= htmlspecialchars($prog->tarikh_mula) ?></td>
+                    <td><?= htmlspecialchars($prog->TARIKH_MULA) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Tarikh Tamat</th>
-                    <td><?= htmlspecialchars($prog->tarikh_tamat) ?></td>
+                    <td><?= htmlspecialchars($prog->TARIKH_TAMAT) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Objektif Program</th>
-                    <td><?= htmlspecialchars($prog->objektif_program) ?></td>
+                    <td><?= htmlspecialchars($prog->OBJEKTIF_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Tempat Program</th>
-                    <td><?= htmlspecialchars($prog->tempat_program) ?></td>
+                    <td><?= htmlspecialchars($prog->TEMPAT_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Masa Program</th>
-                    <td><?= htmlspecialchars($prog->masa_program) ?></td>
+                    <td><?= htmlspecialchars($prog->MASA_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Negeri Program</th>
-                    <td><?= htmlspecialchars($prog->negeri_program) ?></td>
+                    <td><?= htmlspecialchars($prog->NEGERI_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Dokumen Program</th>
                     <td>
-                        <a href="<?= base_url($prog->dokumen_program) ?>" target="_blank">
-                            <?= htmlspecialchars($prog->dokumen_program) ?>
+                        <a href="<?= base_url($prog->DOKUMEN_PROGRAM) ?>" target="_blank">
+                            <?= htmlspecialchars($prog->DOKUMEN_PROGRAM) ?>
                         </a>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="bg-info" scope="row">Status Program</th>
-                    <td><?= htmlspecialchars($prog->approval_status) ?></td>
+                    <td><?= htmlspecialchars($prog->APPROVAL_STATUS) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nota Program</th>
-                    <td><?= htmlspecialchars($prog->program_notes) ?></td>
+                    <td><?= htmlspecialchars($prog->PROGRAM_NOTES) ?></td>
                 </tr>
             </tbody>
         </table>

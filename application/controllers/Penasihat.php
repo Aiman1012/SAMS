@@ -16,7 +16,7 @@ class Penasihat extends CI_Controller
         $data['title'] = 'Penasihat Kelab';
         $data['pageName'] = 'Senarai Program';
 
-        $data['program'] = $this->penasihat_model->getData('tbl_program')->result();
+        $data['program'] = $this->penasihat_model->getData('TBL_PROGRAM')->result();
 
         $this->load->view('templates_penasihat/header', $data);
         $this->load->view('templates_penasihat/sidebar', $data);
@@ -26,13 +26,13 @@ class Penasihat extends CI_Controller
     }
 
     // Approve program to the database
-    public function approveProgram($program_id)
+    public function approveProgram($program_ID)
     {
         $data['title'] = 'Approve Program';
-        $where = array('program_id' => $program_id);
+        $where = array('PROGRAM_ID' => $program_ID);
 
         // Fetch the program details
-        $data['program'] = $this->penasihat_model->getProgramById($where, 'tbl_program')->result();
+        $data['program'] = $this->penasihat_model->getProgramById($where, 'TBL_PROGRAM')->result();
 
         $this->load->view('templates_penasihat/header', $data);
         $this->load->view('templates_penasihat/sidebar', $data);
@@ -40,13 +40,13 @@ class Penasihat extends CI_Controller
         $this->load->view('templates_penasihat/footer');
     }
 
-    public function lulusProgram($program_id)
+    public function lulusProgram($program_ID)
     {
         // Retrieve program details
-        $programDetails = $this->penasihat_model->getProgramById(['program_id' => $program_id], 'tbl_program')->row();
+        $programDetails = $this->penasihat_model->getProgramById(['PROGRAM_ID' => $program_ID], 'TBL_PROGRAM')->row();
 
         // Check if the program has already been approved
-        if ($programDetails->approval_status === 'Pending MPP Approval') {
+        if ($programDetails->APPROVAL_STATUS === 'Pending MPP Approval') {
             // Set flashdata message indicating the program is already approved
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">
             Program has already been approved!
@@ -56,11 +56,11 @@ class Penasihat extends CI_Controller
         </div>');
         } else {
             // Modify the approval status or other fields as needed
-            $programDetails->approval_status = 'Pending MPP Approval';
-            $programDetails->program_notes = 'Program Diluluskan Penasihat';
+            $programDetails->APPROVAL_STATUS = 'Pending MPP Approval';
+            $programDetails->PROGRAM_NOTES = 'Program Diluluskan Penasihat';
 
             // Update the record in the database
-            $this->penasihat_model->updateProgram((array) $programDetails, 'tbl_program');
+            $this->penasihat_model->updateProgram((array) $programDetails, 'TBL_PROGRAM');
 
             // Set flashdata message indicating the program has been approved
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -76,13 +76,13 @@ class Penasihat extends CI_Controller
 
     public function _rule()
     {
-        $this->form_validation->set_rules('program_notes', 'Nota Program', 'required', array(
+        $this->form_validation->set_rules('PROGRAM_NOTES', 'Nota Program', 'required', array(
             'required' => "%s harus diisi"
         ));
     }
 
 
-    public function rejectProgram($program_id)
+    public function rejectProgram($program_ID)
     {
         // Your logic to update approval status to 'Rejected'
         $this->_rule();
@@ -93,13 +93,13 @@ class Penasihat extends CI_Controller
             $this->index();
         } else {
             $data = array(
-                'program_id' => $program_id,
-                'approval_status' => 'Rejected by Penasihat',
-                'program_notes' => $this->input->post('program_notes')
+                'PROGRAM_ID' => $program_ID,
+                'APPROVAL_STATUS' => 'Rejected by Penasihat',
+                'PROGRAM_NOTES' => $this->input->post('PROGRAM_NOTES')
             );
 
             // Update the program status to 'Rejected'
-            $this->penasihat_model->updateProgram($data, 'tbl_program');
+            $this->penasihat_model->updateProgram($data, 'TBL_PROGRAM');
 
             // Notify Club President (you need to implement the notification logic)
 

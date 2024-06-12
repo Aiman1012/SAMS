@@ -20,7 +20,7 @@ class program_model extends CI_Model
     }
     public function updateProgram($data, $table)
     {
-        $this->db->where('program_id', $data['program_id']);
+        $this->db->where('PROGRAM_ID', $data['PROGRAM_ID']);
         $this->db->update($table, $data);
     }
     public function deleteProgram($where, $table)
@@ -31,8 +31,21 @@ class program_model extends CI_Model
     public function getAssignedPrograms($pengarahMatric)
     {
         $this->db->select('*');
-        $this->db->from('tbl_program');
-        $this->db->where('pengarah_matric', $pengarahMatric); // Assuming you have a column for pengarah_matric in tbl_program
+        $this->db->from('TBL_PROGRAM');
+        $this->db->where('PENGARAH_MATRIC', $pengarahMatric); // Assuming you have a column for PENGARAH_MATRIC in TBL_PROGRAM
         return $this->db->get();
+    }
+
+    public function getAllPrograms()
+    {
+        $query = $this->db->get('TBL_PROGRAM');
+        return $query->result();
+    }
+
+    public function getProgramsByStatus($status)
+    {
+        $this->db->where('APPROVAL_STATUS', $status);
+        $query = $this->db->get('TBL_PROGRAM');
+        return $query->result();
     }
 }

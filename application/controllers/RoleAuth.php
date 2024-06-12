@@ -21,7 +21,7 @@ class RoleAuth extends CI_Controller
 
     public function _rule()
     {
-        $this->form_validation->set_rules('pengarah_matric', 'Nombor Matrik', 'required', array(
+        $this->form_validation->set_rules('PENGARAH_MATRIC', 'Nombor Matrik', 'required', array(
             'required' => "%s harus diisi"
         ));
     }
@@ -34,13 +34,13 @@ class RoleAuth extends CI_Controller
             // Set the role in the session
             $this->session->set_userdata('role', $selectedRole);
 
-            // If 'pengarah' is selected, set the pengarah_matric in the session
+            // If 'pengarah' is selected, set the PENGARAH_MATRIC in the session
             if ($selectedRole === 'pengarah') {
-                $pengarah_matric = $this->input->post('pengarah_matric');
-                $this->session->set_userdata('pengarah_matric', $pengarah_matric);
+                $PENGARAH_MATRIC = $this->input->post('PENGARAH_MATRIC');
+                $this->session->set_userdata('PENGARAH_MATRIC', $PENGARAH_MATRIC);
             } else {
-                // If a different role is selected, remove any existing pengarah_matric from the session
-                $this->session->unset_userdata('pengarah_matric');
+                // If a different role is selected, remove any existing PENGARAH_MATRIC from the session
+                $this->session->unset_userdata('PENGARAH_MATRIC');
             }
 
             // Redirect to the main page of the selected role

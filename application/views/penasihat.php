@@ -21,10 +21,10 @@
                 <tbody>
                     <tr class="text-center">
                         <td><?= $no++ ?></td>
-                        <td><?= $prog->nama_program ?></td>
-                        <td><?= $prog->kategori_program ?></td>
-                        <td><?= $prog->approval_status ?></td>
-                        <td><a href="<?= base_url('penasihat/approveProgram/' . $prog->program_id) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Kelulusan Program</a></td>
+                        <td><?= $prog->NAMA_PROGRAM ?></td>
+                        <td><?= $prog->KATEGORI_PROGRAM ?></td>
+                        <td><?= $prog->APPROVAL_STATUS ?></td>
+                        <td><a href="<?= base_url('penasihat/approveProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Kelulusan Program</a></td>
                     </tr>
                 </tbody>
             <?php endforeach ?>

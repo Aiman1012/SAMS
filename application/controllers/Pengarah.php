@@ -19,7 +19,7 @@ class Pengarah extends CI_Controller
         $data['pageName'] = 'Senarai Program';
 
         // Retrieve Pengarah's matric number from the session
-        $pengarahMatric = $this->session->userdata('pengarah_matric');
+        $pengarahMatric = $this->session->userdata('PENGARAH_MATRIC');
 
         if (!empty($pengarahMatric)) {
             // Fetch only the programs assigned to the logged-in Pengarah
@@ -30,7 +30,7 @@ class Pengarah extends CI_Controller
             $this->load->view('pengarah', $data);
             $this->load->view('templates_pengarah/footer');
             var_dump($this->session->userdata('role'));
-            var_dump($this->session->userdata('pengarah_matric'));
+            var_dump($this->session->userdata('PENGARAH_MATRIC'));
         } else {
             // Handle the case when Pengarah's matric is not found in the session
             echo "Pengarah's matric not found in session.";
@@ -39,13 +39,13 @@ class Pengarah extends CI_Controller
 
 
 
-    public function lihatProgram($program_id)
+    public function lihatProgram($program_ID)
     {
         $data['title'] = 'Lihat Program';
-        $where = array('program_id' => $program_id);
+        $where = array('PROGRAM_ID' => $program_ID);
 
         // Fetch the program details
-        $data['program'] = $this->program_model->getProgramById($where, 'tbl_program')->result();
+        $data['program'] = $this->program_model->getProgramById($where, 'TBL_PROGRAM')->result();
 
         $this->load->view('templates_pengarah/header', $data);
         $this->load->view('templates_pengarah/sidebar', $data);
@@ -57,32 +57,32 @@ class Pengarah extends CI_Controller
 
     public function _rule()
     {
-        $this->form_validation->set_rules('kategori_program', 'Kategori Program', 'required', array(
+        $this->form_validation->set_rules('KATEGORI_PROGRAM', 'Kategori Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('tarikh_mula', 'Tarikh Mula', 'required', array(
+        $this->form_validation->set_rules('TARIKH_MULA', 'Tarikh Mula', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('tarikh_tamat', 'Tarikh Tamat', 'required', array(
+        $this->form_validation->set_rules('TARIKH_TAMAT', 'Tarikh Tamat', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('objektif_program', 'Objektif Program', 'required', array(
+        $this->form_validation->set_rules('OBJEKTIF_PROGRAM', 'Objektif Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('tempat_program', 'Tempat Program', 'required', array(
+        $this->form_validation->set_rules('TEMPAT_PROGRAM', 'Tempat Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('masa_program', 'Masa Program', 'required', array(
+        $this->form_validation->set_rules('MASA_PROGRAM', 'Masa Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('negeri_program', 'Negeri Program', 'required', array(
+        $this->form_validation->set_rules('NEGERI_PROGRAM', 'Negeri Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('dokumen_program', 'Kertas Kerja Program', 'required', array(
+        $this->form_validation->set_rules('DOKUMEN_PROGRAM', 'Kertas Kerja Program', 'required', array(
             'required' => "%s harus diisi"
         ));
     }
-    public function editProgram($program_id)
+    public function editProgram($program_ID)
     {
         $this->_rule();
 
@@ -90,21 +90,21 @@ class Pengarah extends CI_Controller
             $this->index();
         } else {
             $data = array(
-                'program_id' => $program_id,
-                'nama_anjuran' => $this->input->post('nama_anjuran'),
-                'kategori_program' => $this->input->post('kategori_program'),
-                'tarikh_mula' => $this->input->post('tarikh_mula'),
-                'tarikh_tamat' => $this->input->post('tarikh_tamat'),
-                'objektif_program' => $this->input->post('objektif_program'),
-                'tempat_program' => $this->input->post('tempat_program'),
-                'masa_program' => $this->input->post('masa_program'),
-                'negeri_program' => $this->input->post('negeri_program'),
-                'dokumen_program' => $this->input->post('dokumen_program'),
-                'approval_status' => 'Edit Request Sent'
+                'PROGRAM_ID' => $program_ID,
+                'NAMA_ANJURAN' => $this->input->post('NAMA_ANJURAN'),
+                'KATEGORI_PROGRAM' => $this->input->post('KATEGORI_PROGRAM'),
+                'TARIKH_MULA' => $this->input->post('TARIKH_MULA'),
+                'TARIKH_TAMAT' => $this->input->post('TARIKH_TAMAT'),
+                'OBJEKTIF_PROGRAM' => $this->input->post('OBJEKTIF_PROGRAM'),
+                'TEMPAT_PROGRAM' => $this->input->post('TEMPAT_PROGRAM'),
+                'MASA_PROGRAM' => $this->input->post('MASA_PROGRAM'),
+                'NEGERI_PROGRAM' => $this->input->post('NEGERI_PROGRAM'),
+                'DOKUMEN_PROGRAM' => $this->input->post('DOKUMEN_PROGRAM'),
+                'APPROVAL_STATUS' => 'Edit Request Sent'
             );
 
 
-            $this->program_model->updateProgram($data, 'tbl_program');
+            $this->program_model->updateProgram($data, 'TBL_PROGRAM');
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
                     Program Succesfully Updated!!
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -115,15 +115,15 @@ class Pengarah extends CI_Controller
         }
     }
 
-    public function cancelProgram($program_id)
+    public function cancelProgram($program_ID)
     {
         // Retrieve program details
-        $programDetails = $this->program_model->getProgramById(['program_id' => $program_id], 'tbl_program')->row();
+        $programDetails = $this->program_model->getProgramById(['PROGRAM_ID' => $program_ID], 'TBL_PROGRAM')->row();
         // Modify the approval status or other fields as needed
-        $programDetails->approval_status = 'Cancelled';
+        $programDetails->APPROVAL_STATUS = 'Cancelled';
 
         // Update the record in the database
-        $this->program_model->updateProgram((array) $programDetails, 'tbl_program');
+        $this->program_model->updateProgram((array) $programDetails, 'TBL_PROGRAM');
 
         // Set flashdata message indicating the program has been cancelled
         $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">

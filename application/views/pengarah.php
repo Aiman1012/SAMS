@@ -23,12 +23,12 @@
                 <tbody>
                     <tr class="text-center">
                         <td><?= $no++ ?></td>
-                        <td><?= $prog->nama_program ?></td>
-                        <td><?= $prog->tarikh_mula ?></td>
-                        <td><?= $prog->tarikh_tamat ?></td>
-                        <td><?= $prog->approval_status ?></td>
-                        <td><a href="<?= base_url('pengarah/lihatProgram/' . $prog->program_id) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Lihat Program</a></td>
-                        <td><a href="<?= base_url('pengarah/cancelProgram/' . $prog->program_id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to cancel the program?')"><i class="fas fa-exclamation-circle"></i> Cancel</a></td>
+                        <td><?= $prog->NAMA_PROGRAM ?></td>
+                        <td><?= $prog->TARIKH_MULA ?></td>
+                        <td><?= $prog->TARIKH_TAMAT ?></td>
+                        <td><?= $prog->APPROVAL_STATUS ?></td>
+                        <td><a href="<?= base_url('pengarah/lihatProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Lihat Program</a></td>
+                        <td><a href="<?= base_url('pengarah/cancelProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to cancel the program?')"><i class="fas fa-exclamation-circle"></i> Cancel</a></td>
                     </tr>
                 </tbody>
             <?php endforeach ?>

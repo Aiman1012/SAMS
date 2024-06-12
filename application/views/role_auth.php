@@ -22,11 +22,11 @@
                         </div>
 
                         <div id="pengarahInput" class="form-group" style="display: none;">
-                            <label for="pengarah_matric">Pengarah Text Input</label>
-                            <input type="text" id="pengarah_matric" name="pengarah_matric" class="form-control">
+                            <label for="PENGARAH_MATRIC">No Matriks Pengarah Program</label>
+                            <input type="text" id="PENGARAH_MATRIC" name="PENGARAH_MATRIC" class="form-control">
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Set Role</button>
+                        <button type="submit" class="btn btn-primary ">Set Role</button>
                     </form>
 
                     <p>Current Role: <?= $this->session->userdata('role') ?></p>
@@ -35,31 +35,31 @@
                         function togglePengarahInput() {
                             var roleSelect = document.getElementById('role');
                             var pengarahInput = document.getElementById('pengarahInput');
-                            var pengarah_matric = document.getElementById('pengarah_matric');
+                            var PENGARAH_MATRIC = document.getElementById('PENGARAH_MATRIC');
 
                             if (roleSelect.value === 'pengarah') {
                                 pengarahInput.style.display = 'block';
-                                pengarah_matric.setAttribute('required', 'required'); // Make the input required if needed
+                                PENGARAH_MATRIC.setAttribute('required', 'required'); // Make the input required if needed
                             } else {
                                 pengarahInput.style.display = 'none';
-                                pengarah_matric.removeAttribute('required'); // Remove the required attribute
+                                PENGARAH_MATRIC.removeAttribute('required'); // Remove the required attribute
                             }
                         }
 
                         function updateSessionValue() {
                             var roleSelect = document.getElementById('role');
-                            var pengarah_matric = document.getElementById('pengarah_matric');
+                            var PENGARAH_MATRIC = document.getElementById('PENGARAH_MATRIC');
 
                             // Check if 'pengarah' is selected and update the session value
                             if (roleSelect.value === 'pengarah') {
                                 // You may want to validate the value before updating the session
-                                var newValue = pengarah_matric.value;
+                                var newValue = PENGARAH_MATRIC.value;
                                 if (newValue.trim() !== '') {
                                     // Use AJAX to update the session value
                                     var xhr = new XMLHttpRequest();
-                                    xhr.open('POST', '<?= base_url('roleauth/updatepengarah_matric') ?>', true);
+                                    xhr.open('POST', '<?= base_url('roleauth/updatePENGARAH_MATRIC') ?>', true);
                                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                                    xhr.send('pengarah_matric=' + encodeURIComponent(newValue));
+                                    xhr.send('PENGARAH_MATRIC=' + encodeURIComponent(newValue));
 
                                     // You can handle success or error responses if needed
                                 }

@@ -20,7 +20,7 @@ class mpp_model extends CI_Model
     }
     public function updateProgram($data, $table)
     {
-        $this->db->where('program_id', $data['program_id']);
+        $this->db->where('PROGRAM_ID', $data['PROGRAM_ID']);
         $this->db->update($table, $data);
     }
     public function deleteProgram($where, $table)

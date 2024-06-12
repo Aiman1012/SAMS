@@ -14,8 +14,21 @@ class Presiden extends CI_Controller
     public function index()
     {
         $data['title'] = 'Presiden Kelab';
-        $data['program'] = $this->program_model->getData('tbl_program')->result();
 
+        // Get the status filter from the GET request
+        $status_filter = $this->input->get('status_filter');
+
+        // Load the model that handles programs
+        $this->load->model('Program_model');
+
+        // Fetch the programs based on the status filter
+        if ($status_filter) {
+            $data['program'] = $this->Program_model->getProgramsByStatus($status_filter);
+        } else {
+            $data['program'] = $this->Program_model->getAllPrograms();
+        }
+
+        // Load the views with the filtered data
         $this->load->view('templates_presiden/header', $data);
         $this->load->view('templates_presiden/sidebar', $data);
         $this->load->view('presiden', $data);
@@ -23,13 +36,14 @@ class Presiden extends CI_Controller
         var_dump($this->session->userdata('role'));
     }
 
-    public function lihatProgram($program_id)
+    public function lihatProgram($PROGRAM_ID)
     {
         $data['title'] = 'Lihat Program';
-        $where = array('program_id' => $program_id);
+        $where = array('PROGRAM_ID' => $PROGRAM_ID);
 
         // Fetch the program details
-        $data['program'] = $this->program_model->getProgramById($where, 'tbl_program')->result();
+        $this->load->model('Program_model');  // Ensure the model is loaded
+        $data['program'] = $this->Program_model->getProgramById($where, 'TBL_PROGRAM')->result();
 
         $this->load->view('templates_presiden/header', $data);
         $this->load->view('templates_presiden/sidebar', $data);
@@ -51,43 +65,53 @@ class Presiden extends CI_Controller
 
     public function _rule()
     {
-        $this->form_validation->set_rules('nama_kelab', 'Nama Kelab', 'required', array(
+        $this->form_validation->set_rules('NAMA_KELAB', 'Nama Kelab', 'required', array(
             'required' => "%s perlu diisi"
         ));
-        $this->form_validation->set_rules('nama_program', 'Nama Program', 'required', array(
+        $this->form_validation->set_rules('NAMA_PROGRAM', 'Nama Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('nama_pengarah', 'Nama Pengarah', 'required', array(
+        $this->form_validation->set_rules('NAMA_PENGARAH', 'Nama Pengarah', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('pengarah_matric', 'No Matriks', 'required', array(
+        $this->form_validation->set_rules('PENGARAH_MATRIC', 'No Matriks', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('kategori_program', 'Kategori Program', 'required', array(
+        $this->form_validation->set_rules('KATEGORI_PROGRAM', 'Kategori Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('tarikh_mula', 'Tarikh Mula', 'required', array(
+        $this->form_validation->set_rules('TARIKH_MULA', 'Tarikh Mula', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('tarikh_tamat', 'Tarikh Tamat', 'required', array(
+        $this->form_validation->set_rules('TARIKH_TAMAT', 'Tarikh Tamat', 'callback_validate_dates');
+        $this->form_validation->set_rules('OBJEKTIF_PROGRAM', 'Objektif Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('objektif_program', 'Objektif Program', 'required', array(
+        $this->form_validation->set_rules('TEMPAT_PROGRAM', 'Tempat Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('tempat_program', 'Tempat Program', 'required', array(
+        $this->form_validation->set_rules('MASA_PROGRAM', 'Masa Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('masa_program', 'Masa Program', 'required', array(
+        $this->form_validation->set_rules('NEGERI_PROGRAM', 'Negeri Program', 'required', array(
             'required' => "%s harus diisi"
         ));
-        $this->form_validation->set_rules('negeri_program', 'Negeri Program', 'required', array(
-            'required' => "%s harus diisi"
-        ));
-        $this->form_validation->set_rules('dokumen_program', 'Kertas Kerja Program', 'required', array(
+        $this->form_validation->set_rules('DOKUMEN_PROGRAM', 'Kertas Kerja Program', 'required', array(
             'required' => "%s harus diisi"
         ));
     }
+
+    public function validate_dates($TARIKH_TAMAT)
+    {
+        $TARIKH_MULA = $this->input->post('TARIKH_MULA');
+
+        if ($TARIKH_TAMAT && $TARIKH_MULA && $TARIKH_TAMAT < $TARIKH_MULA) {
+            $this->form_validation->set_message('validate_dates', 'Tarikh Tamat cannot be before Tarikh Mula.');
+            return false;
+        }
+        return true;
+    }
+
 
     public function mohon_program_action()
     {
@@ -97,24 +121,24 @@ class Presiden extends CI_Controller
             $this->mohonProgram();
         } else {
             $data = array(
-                'nama_kelab' => $this->input->post('nama_kelab'),
-                'nama_program' => $this->input->post('nama_program'),
-                'nama_pengarah' => $this->input->post('nama_pengarah'),
-                'pengarah_matric' => $this->input->post('pengarah_matric'),
-                'nama_anjuran' => $this->input->post('nama_anjuran'),
-                'kategori_program' => $this->input->post('kategori_program'),
-                'tarikh_mula' => $this->input->post('tarikh_mula'),
-                'tarikh_tamat' => $this->input->post('tarikh_tamat'),
-                'objektif_program' => $this->input->post('objektif_program'),
-                'tempat_program' => $this->input->post('tempat_program'),
-                'masa_program' => $this->input->post('masa_program'),
-                'negeri_program' => $this->input->post('negeri_program'),
-                'dokumen_program' => $this->input->post('dokumen_program'),
-                'approval_status' => 'Pending'
+                'NAMA_KELAB' => $this->input->post('NAMA_KELAB'),
+                'NAMA_PROGRAM' => $this->input->post('NAMA_PROGRAM'),
+                'NAMA_PENGARAH' => $this->input->post('NAMA_PENGARAH'),
+                'PENGARAH_MATRIC' => $this->input->post('PENGARAH_MATRIC'),
+                'NAMA_ANJURAN' => $this->input->post('NAMA_ANJURAN'),
+                'KATEGORI_PROGRAM' => $this->input->post('KATEGORI_PROGRAM'),
+                'TARIKH_MULA' => $this->input->post('TARIKH_MULA'),
+                'TARIKH_TAMAT' => $this->input->post('TARIKH_TAMAT'),
+                'OBJEKTIF_PROGRAM' => $this->input->post('OBJEKTIF_PROGRAM'),
+                'TEMPAT_PROGRAM' => $this->input->post('TEMPAT_PROGRAM'),
+                'MASA_PROGRAM' => $this->input->post('MASA_PROGRAM'),
+                'NEGERI_PROGRAM' => $this->input->post('NEGERI_PROGRAM'),
+                'DOKUMEN_PROGRAM' => $this->input->post('DOKUMEN_PROGRAM'),
+                'APPROVAL_STATUS' => 'Pending'
             );
 
 
-            $this->program_model->createProgram('tbl_program', $data);
+            $this->program_model->createProgram('TBL_PROGRAM', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
 			Program Berjaya Dimohon!!
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -125,7 +149,7 @@ class Presiden extends CI_Controller
         }
     }
 
-    public function edit($program_id)
+    public function edit($program_ID)
     {
         $this->_rule();
 
@@ -133,24 +157,25 @@ class Presiden extends CI_Controller
             $this->index();
         } else {
             $data = array(
-                'program_id' => $program_id,
-                'nama_kelab' => $this->input->post('nama_kelab'),
-                'nama_program' => $this->input->post('nama_program'),
-                'nama_pengarah' => $this->input->post('nama_pengarah'),
-                'pengarah_matric' => $this->input->post('pengarah_matric'),
-                'nama_anjuran' => $this->input->post('nama_anjuran'),
-                'kategori_program' => $this->input->post('kategori_program'),
-                'tarikh_mula' => $this->input->post('tarikh_mula'),
-                'tarikh_tamat' => $this->input->post('tarikh_tamat'),
-                'objektif_program' => $this->input->post('objektif_program'),
-                'tempat_program' => $this->input->post('tempat_program'),
-                'masa_program' => $this->input->post('masa_program'),
-                'negeri_program' => $this->input->post('negeri_program'),
-                'dokumen_program' => $this->input->post('dokumen_program')
+                'PROGRAM_ID' => $program_ID,
+                'NAMA_KELAB' => $this->input->post('NAMA_KELAB'),
+                'NAMA_PROGRAM' => $this->input->post('NAMA_PROGRAM'),
+                'NAMA_PENGARAH' => $this->input->post('NAMA_PENGARAH'),
+                'PENGARAH_MATRIC' => $this->input->post('PENGARAH_MATRIC'),
+                'NAMA_ANJURAN' => $this->input->post('NAMA_ANJURAN'),
+                'KATEGORI_PROGRAM' => $this->input->post('KATEGORI_PROGRAM'),
+                'TARIKH_MULA' => $this->input->post('TARIKH_MULA'),
+                'TARIKH_TAMAT' => $this->input->post('TARIKH_TAMAT'),
+                'OBJEKTIF_PROGRAM' => $this->input->post('OBJEKTIF_PROGRAM'),
+                'TEMPAT_PROGRAM' => $this->input->post('TEMPAT_PROGRAM'),
+                'MASA_PROGRAM' => $this->input->post('MASA_PROGRAM'),
+                'NEGERI_PROGRAM' => $this->input->post('NEGERI_PROGRAM'),
+                'DOKUMEN_PROGRAM' => $this->input->post('DOKUMEN_PROGRAM'),
+                'APPROVAL_STATUS' => 'Pending'
             );
 
 
-            $this->program_model->updateProgram($data, 'tbl_program');
+            $this->program_model->updateProgram($data, 'TBL_PROGRAM');
             $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
 			Program Succesfully Updated!!
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -163,9 +188,9 @@ class Presiden extends CI_Controller
 
     public function deleteProgram($id)
     {
-        $where = array('program_id' => $id);
+        $where = array('PROGRAM_ID' => $id);
 
-        $this->program_model->deleteProgram($where, 'tbl_program');
+        $this->program_model->deleteProgram($where, 'TBL_PROGRAM');
         $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
 			Program Succesfully Deleted!!
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -175,15 +200,15 @@ class Presiden extends CI_Controller
         redirect('presiden');
     }
 
-    public function cancelProgram($program_id)
+    public function cancelProgram($program_ID)
     {
         // Retrieve program details
-        $programDetails = $this->program_model->getProgramById(['program_id' => $program_id], 'tbl_program')->row();
+        $programDetails = $this->program_model->getProgramById(['PROGRAM_ID' => $program_ID], 'TBL_PROGRAM')->row();
         // Modify the approval status or other fields as needed
-        $programDetails->approval_status = 'Cancelled';
+        $programDetails->APPROVAL_STATUS = 'Cancelled';
 
         // Update the record in the database
-        $this->program_model->updateProgram((array) $programDetails, 'tbl_program');
+        $this->program_model->updateProgram((array) $programDetails, 'TBL_PROGRAM');
 
         // Set flashdata message indicating the program has been cancelled
         $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -195,5 +220,28 @@ class Presiden extends CI_Controller
 
 
         redirect('presiden');
+    }
+    public function _rulePengarah()
+    {
+        $this->form_validation->set_rules('PENGARAH_MATRIC', 'No Matriks', 'required', array(
+            'required' => "%s harus diisi"
+        ));
+    }
+
+    public function filterProgram()
+    {
+
+        // Get the status filter from the GET request
+        $status_filter = $this->input->get('status_filter');
+
+        // Fetch the programs based on the status filter
+        if ($status_filter) {
+            $data['program'] = $this->program_model->getProgramsByStatus($status_filter);
+        } else {
+            $data['program'] = $this->program_model->getAllPrograms();
+        }
+
+        // Load the view with the filtered data
+        $this->load->view('presiden', $data);
     }
 }

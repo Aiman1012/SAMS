@@ -8,84 +8,84 @@
             <tbody>
                 <tr>
                     <th class="bg-info" scope="row">Nama Kelab</th>
-                    <td><?= htmlspecialchars($prog->nama_kelab) ?></td>
+                    <td><?= htmlspecialchars($prog->NAMA_KELAB) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nama Program</th>
-                    <td><?= htmlspecialchars($prog->nama_program) ?></td>
+                    <td><?= htmlspecialchars($prog->NAMA_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nama Pengarah</th>
-                    <td><?= htmlspecialchars($prog->nama_pengarah) ?></td>
+                    <td><?= htmlspecialchars($prog->NAMA_PENGARAH) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">No Matriks Pengarah Program</th>
-                    <td><?= htmlspecialchars($prog->pengarah_matric) ?></td>
+                    <td><?= htmlspecialchars($prog->PENGARAH_MATRIC) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nama Anjuran</th>
-                    <td><?= htmlspecialchars($prog->nama_anjuran) ?></td>
+                    <td><?= htmlspecialchars($prog->NAMA_ANJURAN) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Kategori Program</th>
-                    <td><?= htmlspecialchars($prog->kategori_program) ?></td>
+                    <td><?= htmlspecialchars($prog->KATEGORI_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Tarikh Mula</th>
-                    <td><?= htmlspecialchars($prog->tarikh_mula) ?></td>
+                    <td><?= htmlspecialchars($prog->TARIKH_MULA) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Tarikh Tamat</th>
-                    <td><?= htmlspecialchars($prog->tarikh_tamat) ?></td>
+                    <td><?= htmlspecialchars($prog->TARIKH_TAMAT) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Objektif Program</th>
-                    <td><?= htmlspecialchars($prog->objektif_program) ?></td>
+                    <td><?= htmlspecialchars($prog->OBJEKTIF_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Tempat Program</th>
-                    <td><?= htmlspecialchars($prog->tempat_program) ?></td>
+                    <td><?= htmlspecialchars($prog->TEMPAT_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Masa Program</th>
-                    <td><?= htmlspecialchars($prog->masa_program) ?></td>
+                    <td><?= htmlspecialchars($prog->MASA_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Negeri Program</th>
-                    <td><?= htmlspecialchars($prog->negeri_program) ?></td>
+                    <td><?= htmlspecialchars($prog->NEGERI_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Dokumen Program</th>
                     <td>
-                        <a href="<?= base_url($prog->dokumen_program) ?>" target="_blank">
-                            <?= htmlspecialchars($prog->dokumen_program) ?>
+                        <a href="<?= base_url($prog->DOKUMEN_PROGRAM) ?>" target="_blank">
+                            <?= htmlspecialchars($prog->DOKUMEN_PROGRAM) ?>
                         </a>
                     </td>
                 </tr>
 
                 <tr>
                     <th class="bg-info" scope="row">Status Program</th>
-                    <td><?= htmlspecialchars($prog->approval_status) ?></td>
+                    <td><?= htmlspecialchars($prog->APPROVAL_STATUS) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nota Program</th>
-                    <td><?= htmlspecialchars($prog->program_notes) ?></td>
+                    <td><?= htmlspecialchars($prog->PROGRAM_NOTES) ?></td>
                 </tr>
             </tbody>
         </table>
         <div class="text-center">
-            <?php if ($this->session->userdata('role') === 'penasihat' && (($prog->approval_status == 'Pending') || ($prog->approval_status == 'Rejected by Penasihat'))) : ?>
+            <?php if ($this->session->userdata('role') === 'penasihat' && (($prog->APPROVAL_STATUS == 'Pending') || ($prog->APPROVAL_STATUS == 'Rejected by Penasihat'))) : ?>
                 <!-- Buttons for Program Approval/Rejection for Penasihat -->
-                <a href="<?= base_url('penasihat/lulusProgram/' . $prog->program_id) ?>" class="btn btn-success btn-sm">Approve Program</a>
-                <button data-toggle="modal" data-target="#reject<?= $prog->program_id ?>" class=" btn btn-danger btn-sm">Reject Program</button>
-            <?php elseif ($this->session->userdata('role') === 'mpp' && (($prog->approval_status == 'Pending MPP Approval') || ($prog->approval_status == 'Rejected by MPP'))) : ?>
+                <a href="<?= base_url('penasihat/lulusProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-success btn-sm">Approve Program</a>
+                <button data-toggle="modal" data-target="#reject<?= $prog->PROGRAM_ID ?>" class=" btn btn-danger btn-sm">Reject Program</button>
+            <?php elseif ($this->session->userdata('role') === 'mpp' && (($prog->APPROVAL_STATUS == 'Pending MPP Approval') || ($prog->APPROVAL_STATUS == 'Rejected by MPP'))) : ?>
                 <!-- Buttons for Program Approval/Rejection for MPP -->
-                <a href="<?= base_url('mpp/lulusProgram/' . $prog->program_id) ?>" class="btn btn-success btn-sm">Approve Program</a>
-                <button data-toggle="modal" data-target="#reject<?= $prog->program_id ?>" class=" btn btn-danger btn-sm">Reject Program</button>
-            <?php elseif ($this->session->userdata('role') === 'hepa' && (($prog->approval_status == 'Pending HEPA Approval') || ($prog->approval_status == 'Rejected by HEPA')) || ($prog->approval_status == 'Edit Request Sent')) : ?>
+                <a href="<?= base_url('mpp/lulusProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-success btn-sm">Approve Program</a>
+                <button data-toggle="modal" data-target="#reject<?= $prog->PROGRAM_ID ?>" class=" btn btn-danger btn-sm">Reject Program</button>
+            <?php elseif ($this->session->userdata('role') === 'hepa' && (($prog->APPROVAL_STATUS == 'Pending HEPA Approval') || ($prog->APPROVAL_STATUS == 'Rejected by HEPA')) || ($prog->APPROVAL_STATUS == 'Edit Request Sent')) : ?>
                 <!-- Buttons for Program Approval/Rejection for HEPA -->
-                <button onclick="approveProgram(<?= $prog->program_id ?>)" class="btn btn-success btn-sm">Approve Program</button>
-                <button data-toggle="modal" data-target="#reject<?= $prog->program_id ?>" class=" btn btn-danger btn-sm">Reject Program</button>
+                <button onclick="approveProgram(<?= $prog->PROGRAM_ID ?>)" class="btn btn-success btn-sm">Approve Program</button>
+                <button data-toggle="modal" data-target="#reject<?= $prog->PROGRAM_ID ?>" class=" btn btn-danger btn-sm">Reject Program</button>
             <?php endif; ?>
         </div>
 
@@ -117,7 +117,7 @@
 
 <!-- Modal For Reject Program -->
 <?php foreach ($program as $prog) : ?>
-    <div class="modal fade" id="reject<?= $prog->program_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="reject<?= $prog->PROGRAM_ID ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -129,12 +129,12 @@
                 <div class="modal-body">
                     <!-- penasihat session -->
                     <?php if ($this->session->userdata('role') === 'penasihat') : ?>
-                        <form action="<?= base_url('penasihat/rejectProgram/' . $prog->program_id) ?>" method="POST">
+                        <form action="<?= base_url('penasihat/rejectProgram/' . $prog->PROGRAM_ID) ?>" method="POST">
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="">Sebab Program Ditolak</label>
-                                    <textarea name="program_notes" class="form-control"><?= $prog->program_notes ?></textarea>
-                                    <?= form_error('program_notes', '<div class="text-small text-danger">', '</div>'); ?>
+                                    <textarea name="PROGRAM_NOTES" class="form-control"><?= $prog->PROGRAM_NOTES ?></textarea>
+                                    <?= form_error('PROGRAM_NOTES', '<div class="text-small text-danger">', '</div>'); ?>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary btn-sm">Submit</button>
@@ -145,12 +145,12 @@
                     <?php endif; ?>
                     <!-- mpp session -->
                     <?php if ($this->session->userdata('role') === 'mpp') : ?>
-                        <form action="<?= base_url('mpp/rejectProgram/' . $prog->program_id) ?>" method="POST">
+                        <form action="<?= base_url('mpp/rejectProgram/' . $prog->PROGRAM_ID) ?>" method="POST">
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="">Sebab Program Ditolak</label>
-                                    <textarea name="program_notes" class="form-control"><?= $prog->program_notes ?></textarea>
-                                    <?= form_error('program_notes', '<div class="text-small text-danger">', '</div>'); ?>
+                                    <textarea name="PROGRAM_NOTES" class="form-control"><?= $prog->PROGRAM_NOTES ?></textarea>
+                                    <?= form_error('PROGRAM_NOTES', '<div class="text-small text-danger">', '</div>'); ?>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary btn-sm">Submit</button>
@@ -161,12 +161,12 @@
                     <?php endif; ?>
                     <!-- hepa session -->
                     <?php if ($this->session->userdata('role') === 'hepa') : ?>
-                        <form action="<?= base_url('hepa/rejectProgram/' . $prog->program_id) ?>" method="POST">
+                        <form action="<?= base_url('hepa/rejectProgram/' . $prog->PROGRAM_ID) ?>" method="POST">
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="">Sebab Program Ditolak</label>
-                                    <textarea name="program_notes" class="form-control"><?= $prog->program_notes ?></textarea>
-                                    <?= form_error('program_notes', '<div class="text-small text-danger">', '</div>'); ?>
+                                    <textarea name="PROGRAM_NOTES" class="form-control"><?= $prog->PROGRAM_NOTES ?></textarea>
+                                    <?= form_error('PROGRAM_NOTES', '<div class="text-small text-danger">', '</div>'); ?>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary btn-sm">Submit</button>
@@ -186,7 +186,7 @@
 
 <!-- Modal For Assign Director -->
 <?php foreach ($program as $prog) : ?>
-    <div class="modal fade" id="assign<?= $prog->program_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="assign<?= $prog->PROGRAM_ID ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -198,12 +198,12 @@
                 <div class="modal-body">
                     <!-- hepa session -->
                     <?php if ($this->session->userdata('role') === 'hepa') : ?>
-                        <form action="<?= base_url('hepa/assignPengarah/' . $prog->program_id) ?>" method="POST">
+                        <form action="<?= base_url('hepa/assignPengarah/' . $prog->PROGRAM_ID) ?>" method="POST">
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="">Nombor Matriks</label>
-                                    <input type="text" name="pengarah_matric" class="form-control" value="<?= $prog->pengarah_matric ?>">
-                                    <?= form_error('pengarah_matric', '<div class="text-small text-danger">', '</div>'); ?>
+                                    <input type="text" name="PENGARAH_MATRIC" class="form-control" value="<?= $prog->PENGARAH_MATRIC ?>">
+                                    <?= form_error('PENGARAH_MATRIC', '<div class="text-small text-danger">', '</div>'); ?>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary btn-sm">Submit</button>
