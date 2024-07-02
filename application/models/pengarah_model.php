@@ -23,9 +23,21 @@ class pengarah_model extends CI_Model
         $this->db->where('PROGRAM_ID', $data['PROGRAM_ID']);
         $this->db->update($table, $data);
     }
+
     public function deleteProgram($where, $table)
     {
         $this->db->where($where);
         $this->db->delete($table);
+    }
+
+    public function insertAjkProgram($data)
+    {
+        $this->db->insert('TBL_AJK_PROGRAM', $data);
+    }
+
+    public function getAjkByProgramId($PROGRAM_ID)
+    {
+        $this->db->where('PROGRAM_ID', $PROGRAM_ID);
+        return $this->db->get('TBL_AJK_PROGRAM')->result();
     }
 }

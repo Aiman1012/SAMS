@@ -7,10 +7,12 @@ class Penasihat extends CI_Controller
     {
         parent::__construct();
         $this->load->model('penasihat_model');
+        $this->load->model('Program_model'); // Load the Program_model here
         $this->load->database();
         $this->load->library('form_validation');
         $this->load->library('session');
     }
+
     public function index()
     {
         $data['title'] = 'Penasihat Kelab';
@@ -26,10 +28,10 @@ class Penasihat extends CI_Controller
     }
 
     // Approve program to the database
-    public function approveProgram($program_ID)
+    public function approveProgram($PROGRAM_ID)
     {
         $data['title'] = 'Approve Program';
-        $where = array('PROGRAM_ID' => $program_ID);
+        $where = array('PROGRAM_ID' => $PROGRAM_ID);
 
         // Fetch the program details
         $data['program'] = $this->penasihat_model->getProgramById($where, 'TBL_PROGRAM')->result();
@@ -40,39 +42,69 @@ class Penasihat extends CI_Controller
         $this->load->view('templates_penasihat/footer');
     }
 
-    public function lulusProgram($program_ID)
+    public function lulusProgram($PROGRAM_ID)
     {
         // Retrieve program details
-        $programDetails = $this->penasihat_model->getProgramById(['PROGRAM_ID' => $program_ID], 'TBL_PROGRAM')->row();
+        $programDetails = $this->penasihat_model->getProgramById(['PROGRAM_ID' => $PROGRAM_ID], 'TBL_PROGRAM')->row();
+
+        // Check if program details were retrieved
+        if (!$programDetails) {
+            log_message('error', 'Program details not found for ID: ' . $PROGRAM_ID);
+            $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Program not found!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>');
+            redirect('penasihat');
+            return;
+        }
 
         // Check if the program has already been approved
         if ($programDetails->APPROVAL_STATUS === 'Pending MPP Approval') {
             // Set flashdata message indicating the program is already approved
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-            Program has already been approved!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>');
+        Program has already been approved!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>');
         } else {
             // Modify the approval status or other fields as needed
-            $programDetails->APPROVAL_STATUS = 'Pending MPP Approval';
-            $programDetails->PROGRAM_NOTES = 'Program Diluluskan Penasihat';
+            $updateData = [
+                'PROGRAM_ID' => $PROGRAM_ID,
+                'APPROVAL_STATUS' => 'Pending MPP Approval',
+                //'NOTA_PENASIHATKELAB' => 'Program Diluluskan Penasihat'
+            ];
 
             // Update the record in the database
-            $this->penasihat_model->updateProgram((array) $programDetails, 'TBL_PROGRAM');
+            $updateStatus = $this->penasihat_model->updateProgram($updateData, 'TBL_PROGRAM');
 
-            // Set flashdata message indicating the program has been approved
-            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            if ($updateStatus) {
+                // Set flashdata message indicating the program has been approved
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
             Program has been approved!
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>');
+            } else {
+                log_message('error', 'Failed to update program for ID: ' . $PROGRAM_ID);
+                $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Failed to approve program!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+            }
         }
 
         redirect('penasihat');
     }
+
+
+
+
 
     public function _rule()
     {
@@ -81,19 +113,16 @@ class Penasihat extends CI_Controller
         ));
     }
 
-
-    public function rejectProgram($program_ID)
+    public function rejectProgram($PROGRAM_ID)
     {
         // Your logic to update approval status to 'Rejected'
         $this->_rule();
 
-        if (
-            $this->form_validation->run()  == FALSE
-        ) {
+        if ($this->form_validation->run() == FALSE) {
             $this->index();
         } else {
             $data = array(
-                'PROGRAM_ID' => $program_ID,
+                'PROGRAM_ID' => $PROGRAM_ID,
                 'APPROVAL_STATUS' => 'Rejected by Penasihat',
                 'PROGRAM_NOTES' => $this->input->post('PROGRAM_NOTES')
             );
@@ -110,6 +139,57 @@ class Penasihat extends CI_Controller
             </button>
         </div>');
             redirect('penasihat');
+        }
+    }
+
+    public function tambahNota($PROGRAM_ID)
+    {
+        $this->form_validation->set_rules('PROGRAM_NOTES', 'Nota Program', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Reload the page with validation errors
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('penasihat/approveProgram/' . $PROGRAM_ID);
+        } else {
+            $data = array(
+                'NOTA_PENASIHATKELAB' => $this->input->post('PROGRAM_NOTES'),
+                'PROGRAM_ID' => $PROGRAM_ID
+            );
+
+            $updateStatus = $this->penasihat_model->updateProgram($data, 'TBL_PROGRAM');
+
+            if ($updateStatus) {
+                $this->session->set_flashdata('success', 'Nota program telah ditambah');
+            } else {
+                $this->session->set_flashdata('error', 'Failed to add nota program');
+            }
+            redirect('penasihat/approveProgram/' . $PROGRAM_ID);
+        }
+    }
+
+
+    public function editNota($PROGRAM_ID)
+    {
+        $this->form_validation->set_rules('PROGRAM_NOTES', 'Nota Program', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Reload the page with validation errors
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('penasihat/approveProgram/' . $PROGRAM_ID);
+        } else {
+            $data = array(
+                'NOTA_PENASIHATKELAB' => $this->input->post('PROGRAM_NOTES'),
+                'PROGRAM_ID' => $PROGRAM_ID
+            );
+
+            $updateStatus = $this->penasihat_model->updateProgram($data, 'TBL_PROGRAM');
+
+            if ($updateStatus) {
+                $this->session->set_flashdata('success', 'Nota program telah diubah');
+            } else {
+                $this->session->set_flashdata('error', 'Failed to update nota program');
+            }
+            redirect('penasihat/approveProgram/' . $PROGRAM_ID);
         }
     }
 }

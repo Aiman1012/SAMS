@@ -10,8 +10,7 @@ class program_model extends CI_Model
 
     public function getProgramById($where, $table)
     {
-        $this->db->where($where);
-        return $this->db->get($table);
+        return $this->db->get_where($table, $where);
     }
 
     public function createProgram($table, $data)
@@ -23,6 +22,7 @@ class program_model extends CI_Model
         $this->db->where('PROGRAM_ID', $data['PROGRAM_ID']);
         $this->db->update($table, $data);
     }
+
     public function deleteProgram($where, $table)
     {
         $this->db->where($where);

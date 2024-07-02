@@ -27,6 +27,8 @@ $config['base_url'] = 'http://localhost/SAMS/';
 
 $config['sess_driver'] = 'files';
 
+$config['log_threshold'] = 1; // For error messages, set to 2 for debugging messages
+
 /*
 |--------------------------------------------------------------------------
 | Index File

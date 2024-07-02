@@ -31,10 +31,12 @@
                     <th class="bg-info" scope="row">Tarikh Mula</th>
                     <td><?= htmlspecialchars($prog->TARIKH_MULA) ?></td>
                 </tr>
-                <tr>
-                    <th class="bg-info" scope="row">Tarikh Tamat</th>
-                    <td><?= htmlspecialchars($prog->TARIKH_TAMAT) ?></td>
-                </tr>
+                <?php if (!empty($prog->TARIKH_TAMAT)) : ?>
+                    <tr>
+                        <th class="bg-info" scope="row">Tarikh Tamat</th>
+                        <td><?= htmlspecialchars($prog->TARIKH_TAMAT) ?></td>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th class="bg-info" scope="row">Objektif Program</th>
                     <td><?= htmlspecialchars($prog->OBJEKTIF_PROGRAM) ?></td>
@@ -43,10 +45,12 @@
                     <th class="bg-info" scope="row">Tempat Program</th>
                     <td><?= htmlspecialchars($prog->TEMPAT_PROGRAM) ?></td>
                 </tr>
-                <tr>
-                    <th class="bg-info" scope="row">Masa Program</th>
-                    <td><?= htmlspecialchars($prog->MASA_PROGRAM) ?></td>
-                </tr>
+                <?php if (empty($prog->TARIKH_TAMAT)) : ?>
+                    <tr>
+                        <th class="bg-info" scope="row">Masa Program</th>
+                        <td><?= htmlspecialchars($prog->MASA_PROGRAM) ?></td>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th class="bg-info" scope="row">Negeri Program</th>
                     <td><?= htmlspecialchars($prog->NEGERI_PROGRAM) ?></td>
@@ -54,19 +58,29 @@
                 <tr>
                     <th class="bg-info" scope="row">Dokumen Program</th>
                     <td>
-                        <a href="<?= base_url($prog->DOKUMEN_PROGRAM) ?>" target="_blank">
+                        <a href="<?= base_url('uploads/' . $prog->DOKUMEN_PROGRAM) ?>" target="_blank">
                             <?= htmlspecialchars($prog->DOKUMEN_PROGRAM) ?>
                         </a>
                     </td>
                 </tr>
-
                 <tr>
                     <th class="bg-info" scope="row">Status Program</th>
                     <td><?= htmlspecialchars($prog->APPROVAL_STATUS) ?></td>
                 </tr>
                 <tr>
                     <th class="bg-info" scope="row">Nota Program</th>
-                    <td><?= htmlspecialchars($prog->PROGRAM_NOTES) ?></td>
+                    <td>
+                        <?php if ($this->session->userdata('role') === 'presiden') : ?>
+                            <strong>Nota Penasihat Kelab:</strong><br>
+                            <?= htmlspecialchars($prog->NOTA_PENASIHATKELAB) ?><br><br>
+                            <strong>Nota MPP:</strong><br>
+                            <?= htmlspecialchars($prog->NOTA_MPP) ?><br><br>
+                            <strong>Nota HEPA:</strong><br>
+                            <?= htmlspecialchars($prog->NOTA_HEPA) ?><br><br>
+                        <?php else : ?>
+                            <?= htmlspecialchars($prog->PROGRAM_NOTES) ?>
+                        <?php endif; ?>
+                    </td>
                 </tr>
             </tbody>
         </table>

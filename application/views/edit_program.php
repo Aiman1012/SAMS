@@ -18,10 +18,12 @@
                     <th class="bg-info" scope="row">Tarikh Mula</th>
                     <td><?= htmlspecialchars($prog->TARIKH_MULA) ?></td>
                 </tr>
-                <tr>
-                    <th class="bg-info" scope="row">Tarikh Tamat</th>
-                    <td><?= htmlspecialchars($prog->TARIKH_TAMAT) ?></td>
-                </tr>
+                <?php if (!empty($prog->TARIKH_TAMAT)) : ?>
+                    <tr>
+                        <th class="bg-info" scope="row">Tarikh Tamat</th>
+                        <td><?= htmlspecialchars($prog->TARIKH_TAMAT) ?></td>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th class="bg-info" scope="row">Objektif Program</th>
                     <td><?= htmlspecialchars($prog->OBJEKTIF_PROGRAM) ?></td>
@@ -30,10 +32,12 @@
                     <th class="bg-info" scope="row">Tempat Program</th>
                     <td><?= htmlspecialchars($prog->TEMPAT_PROGRAM) ?></td>
                 </tr>
-                <tr>
-                    <th class="bg-info" scope="row">Masa Program</th>
-                    <td><?= htmlspecialchars($prog->MASA_PROGRAM) ?></td>
-                </tr>
+                <?php if (empty($prog->TARIKH_TAMAT)) : ?>
+                    <tr>
+                        <th class="bg-info" scope="row">Masa Program</th>
+                        <td><?= htmlspecialchars($prog->MASA_PROGRAM) ?></td>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th class="bg-info" scope="row">Negeri Program</th>
                     <td><?= htmlspecialchars($prog->NEGERI_PROGRAM) ?></td>
@@ -41,7 +45,7 @@
                 <tr>
                     <th class="bg-info" scope="row">Dokumen Program</th>
                     <td>
-                        <a href="<?= base_url($prog->DOKUMEN_PROGRAM) ?>" target="_blank">
+                        <a href="<?= base_url('uploads/' . $prog->DOKUMEN_PROGRAM) ?>" target="_blank">
                             <?= htmlspecialchars($prog->DOKUMEN_PROGRAM) ?>
                         </a>
                     </td>
@@ -61,7 +65,11 @@
         <!-- Edit button centered below the table -->
         <div class="d-flex justify-content-center mt-3">
             <button data-toggle="modal" data-target="#edit<?= $prog->PROGRAM_ID ?>" class=" btn btn-primary btn-sm">
-                <i class="fas fa-edit"></i>Edit Program</button>
+                <i class="fas fa-edit"></i>Edit Program
+            </button>
+            <button onclick="window.location.href='<?= base_url('pengarah/assignAjkProgram/' . $prog->PROGRAM_ID) ?>'" class="btn btn-secondary btn-sm ml-2">
+                <i class="fas fa-user-plus"></i> Assign AJK Program
+            </button>
         </div>
 </div>
 
@@ -88,7 +96,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url('pengarah/editProgram/' . $prog->PROGRAM_ID) ?>" method="POST">
+                    <form action="<?= base_url('pengarah/editProgram/' . $prog->PROGRAM_ID) ?>" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="">Nama Anjuran</label>
                             <input type="text" name="NAMA_ANJURAN" class="form-control" value="<?= $prog->NAMA_ANJURAN ?>">
@@ -99,7 +107,6 @@
                             <select name="KATEGORI_PROGRAM" class="form-control">
                                 <option value="Akademik" <?= ($prog->KATEGORI_PROGRAM == 'Akademik') ? 'selected' : ''; ?>>Akademik</option>
                                 <option value="Sukan" <?= ($prog->KATEGORI_PROGRAM == 'Sukan') ? 'selected' : ''; ?>>Sukan</option>
-                                <!-- Add more options as needed -->
                             </select>
                             <?= form_error('KATEGORI_PROGRAM', '<div class="text-small text-danger">', '</div>'); ?>
                         </div>

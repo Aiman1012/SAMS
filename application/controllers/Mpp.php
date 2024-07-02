@@ -26,10 +26,10 @@ class Mpp extends CI_Controller
     }
 
     // Approve program to the database
-    public function approveProgram($program_ID)
+    public function approveProgram($PROGRAM_ID)
     {
         $data['title'] = 'Approve Program';
-        $where = array('PROGRAM_ID' => $program_ID);
+        $where = array('PROGRAM_ID' => $PROGRAM_ID);
 
         // Fetch the program details
         $data['program'] = $this->mpp_model->getProgramById($where, 'TBL_PROGRAM')->result();
@@ -40,10 +40,10 @@ class Mpp extends CI_Controller
         $this->load->view('templates_mpp/footer');
     }
 
-    public function lulusProgram($program_ID)
+    public function lulusProgram($PROGRAM_ID)
     {
         // Retrieve program details
-        $programDetails = $this->mpp_model->getProgramById(['PROGRAM_ID' => $program_ID], 'TBL_PROGRAM')->row();
+        $programDetails = $this->mpp_model->getProgramById(['PROGRAM_ID' => $PROGRAM_ID], 'TBL_PROGRAM')->row();
 
         // Check if the program has already been approved
         if ($programDetails->APPROVAL_STATUS === 'Pending HEPA Approval') {
@@ -81,7 +81,7 @@ class Mpp extends CI_Controller
     }
 
 
-    public function rejectProgram($program_ID)
+    public function rejectProgram($PROGRAM_ID)
     {
         // Your logic to update approval status to 'Rejected'
         $this->_rule();
@@ -92,7 +92,7 @@ class Mpp extends CI_Controller
             $this->index();
         } else {
             $data = array(
-                'PROGRAM_ID' => $program_ID,
+                'PROGRAM_ID' => $PROGRAM_ID,
                 'APPROVAL_STATUS' => 'Rejected by MPP',
                 'PROGRAM_NOTES' => $this->input->post('PROGRAM_NOTES')
             );
@@ -109,6 +109,56 @@ class Mpp extends CI_Controller
             </button>
         </div>');
             redirect('mpp');
+        }
+    }
+
+    public function tambahNota($PROGRAM_ID)
+    {
+        $this->form_validation->set_rules('PROGRAM_NOTES', 'Nota Program', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Reload the page with validation errors
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('mpp/approveProgram/' . $PROGRAM_ID);
+        } else {
+            $data = array(
+                'NOTA_MPP' => $this->input->post('PROGRAM_NOTES'),
+                'PROGRAM_ID' => $PROGRAM_ID
+            );
+
+            $updateStatus = $this->mpp_model->updateProgram($data, 'TBL_PROGRAM');
+
+            if ($updateStatus) {
+                $this->session->set_flashdata('success', 'Nota program telah ditambah');
+            } else {
+                $this->session->set_flashdata('error', 'Failed to add nota program');
+            }
+            redirect('mpp/approveProgram/' . $PROGRAM_ID);
+        }
+    }
+
+    public function editNota($PROGRAM_ID)
+    {
+        $this->form_validation->set_rules('PROGRAM_NOTES', 'Nota Program', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            // Reload the page with validation errors
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('mpp/programDetails/' . $PROGRAM_ID);
+        } else {
+            $data = array(
+                'NOTA_MPP' => $this->input->post('PROGRAM_NOTES'),
+                'PROGRAM_ID' => $PROGRAM_ID
+            );
+
+            $updateStatus = $this->mpp_model->updateProgram($data, 'TBL_PROGRAM');
+
+            if ($updateStatus) {
+                $this->session->set_flashdata('success', 'Nota program telah diubah');
+            } else {
+                $this->session->set_flashdata('error', 'Failed to update nota program');
+            }
+            redirect('mpp/approveProgram/' . $PROGRAM_ID);
         }
     }
 }

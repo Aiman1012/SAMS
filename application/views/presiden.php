@@ -15,13 +15,14 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <select name="status_filter" class="form-control">
-                        <option value="">All</option>
-                        <option value="Approved" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'Approved') ? 'selected' : '' ?>>Approved</option>
-                        <option value="Cancelled" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'Cancelled') ? 'selected' : '' ?>>Cancelled</option>
-                        <option value="Pending" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'Pending') ? 'selected' : '' ?>>Pending</option>
-                        <option value="Pending HEPA Approval" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'Pending HEPA Approval') ? 'selected' : '' ?>>Pending HEPA Approval</option>
-                        <option value="Pending MPP Approval" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'Pending MPP Approval') ? 'selected' : '' ?>>Pending MPP Approval</option>
+                        <option value="" <?= !isset($_GET['status_filter']) ? 'selected' : '' ?>>All</option>
+                        <option value="APPROVED" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'APPROVED') ? 'selected' : '' ?>>Approved</option>
+                        <option value="CANCELLED" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'CANCELLED') ? 'selected' : '' ?>>Cancelled</option>
+                        <option value="PENDING" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING') ? 'selected' : '' ?>>Pending</option>
+                        <option value="PENDING HEPA APPROVAL" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING HEPA APPROVAL') ? 'selected' : '' ?>>Pending HEPA Approval</option>
+                        <option value="PENDING MPP APPROVAL" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING MPP APPROVAL') ? 'selected' : '' ?>>Pending MPP Approval</option>
                     </select>
+
                 </div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary">Filter</button>
@@ -52,9 +53,10 @@
                         <!-- <td><a href="<?= base_url('presiden/kehadiranProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Kehadiran</a></td> -->
                         <td>
                             <?php if ($prog->APPROVAL_STATUS == 'Approved') : ?>
-                                <a href="<?= base_url('presiden/assignPengarah/' . $prog->PROGRAM_ID) ?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Assign Pengarah</a>
+                                <button data-toggle="modal" data-target="#assignPengarahModal<?= $prog->PROGRAM_ID ?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Assign Pengarah</button>
                             <?php endif; ?>
                         </td>
+
                         <td class="text-center">
                             <button data-toggle="modal" data-target="#edit<?= $prog->PROGRAM_ID ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>Edit</button>
                             <!-- <a href="<?= base_url('presiden/deleteProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i></a> -->
@@ -71,7 +73,7 @@
 
 
 
-<!-- Modal -->
+<!-- Modal for edit program -->
 <?php foreach ($program as $prog) : ?>
     <div class="modal fade" id="edit<?= $prog->PROGRAM_ID ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -176,3 +178,28 @@
         </div>
     </div>
 <?php endforeach ?>
+
+<!-- Assign Pengarah Modal -->
+<?php foreach ($program as $prog) : ?>
+    <div class="modal fade" id="assignPengarahModal<?= $prog->PROGRAM_ID ?>" tabindex="-1" role="dialog" aria-labelledby="assignPengarahModalLabel<?= $prog->PROGRAM_ID ?>" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assignPengarahModalLabel<?= $prog->PROGRAM_ID ?>">Assign Pengarah for <?= htmlspecialchars($prog->NAMA_PROGRAM) ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?= base_url('presiden/assignPengarah/' . $prog->PROGRAM_ID) ?>" method="post">
+                        <div class="form-group">
+                            <label for="PENGARAH_MATRIC">Pengarah Matric Number</label>
+                            <input type="text" class="form-control" id="PENGARAH_MATRIC" name="PENGARAH_MATRIC" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Assign</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>

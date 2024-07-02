@@ -22,7 +22,9 @@ class penasihat_model extends CI_Model
     {
         $this->db->where('PROGRAM_ID', $data['PROGRAM_ID']);
         $this->db->update($table, $data);
+        return $this->db->affected_rows(); // Return the number of affected rows
     }
+
     public function deleteProgram($where, $table)
     {
         $this->db->where($where);

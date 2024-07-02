@@ -14,6 +14,7 @@
                     <th>Kategori Program</th>
                     <th>Status Program</th>
                     <th>Kelulusan Program</th>
+                    <th>Approve Program</th> <!-- Added new column for the approve button -->
                 </tr>
             </thead>
             <?php $no = 1;
@@ -24,7 +25,12 @@
                         <td><?= $prog->NAMA_PROGRAM ?></td>
                         <td><?= $prog->KATEGORI_PROGRAM ?></td>
                         <td><?= $prog->APPROVAL_STATUS ?></td>
-                        <td><a href="<?= base_url('hepa/approveProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i>Kelulusan Program</a></td>
+                        <td><a href="<?= base_url('hepa/approveProgram/' . $prog->PROGRAM_ID) ?>" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> Kelulusan Program</a></td>
+                        <td>
+                            <?php if ($prog->APPROVAL_STATUS == 'Approved') : ?>
+                                <a href="<?= base_url('hepa/approveProgramForm/' . $prog->PROGRAM_ID) ?>" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Approve Program</a>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 </tbody>
             <?php endforeach ?>

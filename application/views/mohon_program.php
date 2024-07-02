@@ -1,4 +1,9 @@
-<form action="<?= base_url('presiden/mohon_program_action') ?>" method="POST">
+<?php if ($this->session->flashdata('message')) : ?>
+    <?= $this->session->flashdata('message'); ?>
+<?php endif; ?>
+
+<form action="<?= base_url('presiden/mohon_program_action') ?>" method="POST" enctype="multipart/form-data">
+
     <div class="form-group">
         <label for="">Nama Kelab</label>
         <input type="text" name="NAMA_KELAB" class="form-control">
@@ -90,11 +95,10 @@
         <?= form_error('NEGERI_PROGRAM', '<div class="text-small text-danger">', '</div>'); ?>
     </div>
     <div class="form-group">
-        <label for="">Dokumen Program</label>
-        <input type="file" name="DOKUMEN_PROGRAM" class="form-control-file">
+        <label for="DOKUMEN_PROGRAM">Dokumen Program</label>
+        <input type="file" id="DOKUMEN_PROGRAM" name="DOKUMEN_PROGRAM" class="form-control-file">
         <?= form_error('DOKUMEN_PROGRAM', '<div class="text-small text-danger">', '</div>'); ?>
     </div>
-
     <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save"></i> Save</button>
     <button type="reset" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i> Reset</button>
 </form>
