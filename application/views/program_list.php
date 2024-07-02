@@ -39,6 +39,10 @@
             <td><?= htmlspecialchars($program->OBJEKTIF_PROGRAM) ?></td>
         </tr>
         <tr>
+            <th>Kos Program</th>
+            <td><?= htmlspecialchars($program->KOS_PROGRAM) ?></td>
+        </tr>
+        <tr>
             <th>Tempat Program</th>
             <td><?= htmlspecialchars($program->TEMPAT_PROGRAM) ?></td>
         </tr>
@@ -206,7 +210,7 @@
             <td><?= htmlspecialchars($program->UPDATED_AT) ?></td>
         </tr>
     </table>
-    <a href="<?= site_url('program/cetak/' . $program->PROGRAM_ID) ?>" class="btn btn-primary">Cetak</a>
+    <a href="<?= site_url('hepa/cetak/' . $program->PROGRAM_ID) ?>" class="btn btn-primary">Cetak</a>
 <?php else : ?>
     <p>No program details found.</p>
 <?php endif; ?>

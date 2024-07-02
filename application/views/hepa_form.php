@@ -1,8 +1,6 @@
 <?= $this->session->flashdata('message'); ?>
 
 <div class="container">
-    <h2><?= $title ?></h2>
-    <?= $this->session->flashdata('message'); ?>
     <form action="<?= base_url('hepa/submitApproval') ?>" method="POST">
         <input type="hidden" name="PROGRAM_ID" value="<?= $PROGRAM_ID ?>">
 
@@ -29,8 +27,16 @@
                         <input type="number" class="form-control" id="BILANGAN_SIJIL_PENGARAH_PPHKP" name="BILANGAN_SIJIL_PENGARAH_PPHKP" required>
                     </div>
                     <div class="col-md-6 form-group">
+                        <label for="BIL_PESERTA">Bilangan Peserta</label>
+                        <input type="number" step="1" class="form-control" id="BIL_PESERTA" name="BIL_PESERTA" required>
+                    </div>
+                    <div class="col-md-6 form-group">
                         <label for="KUTIPAN_YURAN_PESERTA">Kutipan Yuran Peserta (RM)</label>
                         <input type="number" step="0.01" class="form-control" id="KUTIPAN_YURAN_PESERTA" name="KUTIPAN_YURAN_PESERTA" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="KOS_PROGRAM">Kos Program (RM)</label>
+                        <input type="number" step="0.01" class="form-control" id="KOS_PROGRAM" name="KOS_PROGRAM" required>
                     </div>
                 </div>
             </div>
@@ -84,7 +90,7 @@
                 <h4>Kenderaan Universiti</h4>
             </div>
             <div class="card-body" id="kenderaan_section">
-                <div class="row">
+                <div class="row kenderaan_entry">
                     <div class="col-md-6 form-group">
                         <label for="KENDERAAN_UNIVERSITI">Jenis Kenderaan Universiti</label>
                         <select class="form-control" id="KENDERAAN_UNIVERSITI" name="KENDERAAN_UNIVERSITI[]" required>
@@ -120,6 +126,7 @@
             </div>
             <button type="button" class="btn btn-secondary" onclick="addPeserta()">Add Peserta</button>
         </div>
+
 
         <div class="card mb-4">
             <div class="card-header">
@@ -238,22 +245,23 @@
         const newPeserta = document.createElement('div');
         newPeserta.classList.add('row', 'mb-3');
         newPeserta.innerHTML = `
-            <div class="col-md-6 form-group">
-                <label for="bil_peserta">Bil Peserta</label>
-                <input type="number" class="form-control" name="bil_peserta[]" required>
-            </div>
-            <div class="col-md-6 form-group">
-                <label for="bayaran_peserta">Bayaran (RM)</label>
-                <input type="number" step="0.01" class="form-control" name="bayaran_peserta[]" required>
-            </div>
-        `;
+        <div class="col-md-6 form-group">
+            <label for="bil_peserta">Bil Peserta</label>
+            <input type="number" class="form-control" name="bil_peserta[]" required>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="bayaran_peserta">Bayaran (RM)</label>
+            <input type="number" step="0.01" class="form-control" name="bayaran_peserta[]" required>
+        </div>
+    `;
         pesertaSection.appendChild(newPeserta);
     }
+
 
     function addKenderaan() {
         const kenderaanSection = document.getElementById('kenderaan_section');
         const newKenderaan = document.createElement('div');
-        newKenderaan.classList.add('row', 'mb-3');
+        newKenderaan.classList.add('row', 'kenderaan_entry', 'mb-3');
         newKenderaan.innerHTML = `
             <div class="col-md-6 form-group">
                 <label for="KENDERAAN_UNIVERSITI">Jenis Kenderaan Universiti</label>

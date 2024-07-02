@@ -10,6 +10,7 @@ class Hepa extends CI_Controller
         $this->load->database();
         $this->load->library('form_validation');
         $this->load->library('session');
+        // $this->load->library('m_pdf'); // Load the m_pdf library
     }
 
     public function index()
@@ -161,7 +162,9 @@ class Hepa extends CI_Controller
                 'DANA_TABUNG_AMANAH' => $this->input->post('DANA_TABUNG_AMANAH'),
                 'BILANGAN_SIJIL_TNC_HEPA' => $this->input->post('BILANGAN_SIJIL_TNC_HEPA'),
                 'BILANGAN_SIJIL_PENGARAH_PPHKP' => $this->input->post('BILANGAN_SIJIL_PENGARAH_PPHKP'),
+                'BIL_PESERTA' => $this->input->post('BIL_PESERTA'),
                 'KUTIPAN_YURAN_PESERTA' => $this->input->post('KUTIPAN_YURAN_PESERTA'),
+                'KOS_PROGRAM' => $this->input->post('KOS_PROGRAM'),
                 'PEGAWAI_PENGIRING_1_NAMA' => $this->input->post('PEGAWAI_PENGIRING_1_NAMA'),
                 'PEGAWAI_PENGIRING_1_NO_KP' => $this->input->post('PEGAWAI_PENGIRING_1_NO_KP'),
                 'PEGAWAI_PENGIRING_1_JAWATAN' => $this->input->post('PEGAWAI_PENGIRING_1_JAWATAN'),
@@ -170,11 +173,6 @@ class Hepa extends CI_Controller
                 'PEGAWAI_PENGIRING_2_NO_KP' => $this->input->post('PEGAWAI_PENGIRING_2_NO_KP'),
                 'PEGAWAI_PENGIRING_2_JAWATAN' => $this->input->post('PEGAWAI_PENGIRING_2_JAWATAN'),
                 'PEGAWAI_PENGIRING_2_NO_TEL' => $this->input->post('PEGAWAI_PENGIRING_2_NO_TEL'),
-                'KENDERAAN_UNIVERSITI' => json_encode($this->input->post('KENDERAAN_UNIVERSITI')),
-                'PESERTA' => json_encode($this->preparePesertaData(
-                    $this->input->post('bil_peserta'),
-                    $this->input->post('bayaran_peserta')
-                )),
                 'DISEDIAKAN_NAMA' => $this->input->post('DISEDIAKAN_NAMA'),
                 'DISEDIAKAN_JAWATAN' => $this->input->post('DISEDIAKAN_JAWATAN'),
                 'DISEDIAKAN_BAGI_PIHAK' => $this->input->post('DISEDIAKAN_BAGI_PIHAK'),
@@ -189,6 +187,31 @@ class Hepa extends CI_Controller
                 'KELULUSAN_STATUS' => $this->input->post('KELULUSAN_STATUS'),
             );
 
+            // Combine 'KENDERAAN_UNIVERSITI' and 'bilangan_kenderaan' into a single array
+            $kenderaan = [];
+            $kenderaan_universiti = $this->input->post('KENDERAAN_UNIVERSITI');
+            $bilangan_kenderaan = $this->input->post('bilangan_kenderaan');
+            if (!empty($kenderaan_universiti) && is_array($kenderaan_universiti)) {
+                for (
+                    $i = 0;
+                    $i < count($kenderaan_universiti);
+                    $i++
+                ) {
+                    $kenderaan[] = [
+                        'jenis' => $kenderaan_universiti[$i],
+                        'bilangan' => $bilangan_kenderaan[$i]
+                    ];
+                }
+            }
+            $data['KENDERAAN_UNIVERSITI'] = json_encode($kenderaan);
+
+            // Combine 'bil_peserta' and 'bayaran_peserta' into a single array
+            $peserta = $this->preparePesertaData(
+                $this->input->post('bil_peserta'),
+                $this->input->post('bayaran_peserta')
+            );
+            $data['PESERTA'] = json_encode($peserta);
+
             log_message('debug', 'Data to be inserted: ' . print_r($data, true));
 
             if ($this->hepa_model->approveProgram($data)) {
@@ -202,6 +225,9 @@ class Hepa extends CI_Controller
             }
         }
     }
+
+
+
 
     private function _ruleReject()
     {
@@ -265,14 +291,52 @@ class Hepa extends CI_Controller
         $this->load->view('templates_hepa/footer');
     }
 
+    // public function cetak($PROGRAM_ID)
+    // {
+    //     $data['program'] = $this->Program_model->getProgramById(['PROGRAM_ID' => $PROGRAM_ID])->row();
+    //     $html = $this->load->view('program_pdf', $data, true);
+
+    //     $this->load->library('pdf');
+    //     $pdf = new \Mpdf\Mpdf();
+    //     $pdf->WriteHTML($html);
+    //     $pdf->Output('program_details.pdf', 'D');
+    // }
+
     public function cetak($PROGRAM_ID)
     {
-        $data['program'] = $this->Program_model->getProgramById(['PROGRAM_ID' => $PROGRAM_ID])->row();
-        $html = $this->load->view('program_pdf', $data, true);
+        // Load the necessary data
+        $program = $this->hepa_model->getProgramDetails($PROGRAM_ID);
+        if (!$program) {
+            show_error('Program not found', 404);
+            return;
+        }
 
-        $this->load->library('pdf');
-        $pdf = new \Mpdf\Mpdf();
-        $pdf->WriteHTML($html);
-        $pdf->Output('program_details.pdf', 'D');
+        // Load the view with program data to generate HTML
+        $html = $this->load->view('program_pdf', ['program' => $program], true);
+
+        // Create a new mPDF instance and configure it
+        $mpdf = new \Mpdf\Mpdf([
+            'margin_top' => 10,
+            'margin_right' => 10,
+            'margin_bottom' => 10,
+            'margin_left' => 10,
+        ]);
+
+        // Write the HTML to the PDF
+        $mpdf->WriteHTML($html);
+
+        // Output the PDF
+        $mpdf->Output('program_details.pdf', 'I'); // 'D' to download, 'I' to view in browser
     }
 }
+
+    // function cetak($id)
+    // {
+
+    //     $data = [];
+
+    //     $bil2 = $this->load->view("pdf/surat.php", $data, true);
+    //     $mpdf = new \Mpdf\Mpdf();
+    //     $mpdf->WriteHTML($bil2);
+    //     $mpdf->Output();
+    // }
