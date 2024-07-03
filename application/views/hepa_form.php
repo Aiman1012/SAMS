@@ -235,6 +235,9 @@
 
         <div class="text-center">
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="<?= base_url('hepa') ?>" class="btn btn-danger btn-sm ml-auto">
+                <i class="fas fa-back"></i> Go Back
+            </a>
         </div>
     </form>
 </div>

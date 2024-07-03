@@ -30,4 +30,15 @@ class penasihat_model extends CI_Model
         $this->db->where($where);
         $this->db->delete($table);
     }
+
+    public function getProgramsByStatus($status)
+    {
+        $this->db->where('APPROVAL_STATUS', $status);
+        return $this->db->get('TBL_PROGRAM')->result();
+    }
+
+    public function getAllPrograms()
+    {
+        return $this->db->get('TBL_PROGRAM')->result();
+    }
 }

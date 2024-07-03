@@ -16,13 +16,19 @@ class Mpp extends CI_Controller
         $data['title'] = 'MPP';
         $data['pageName'] = 'Senarai Program';
 
-        $data['program'] = $this->mpp_model->getData('TBL_PROGRAM')->result();
+        $status_filter = $this->input->get('status_filter');
+
+        // Fetch the programs based on the status filter
+        if (isset($status_filter) && $status_filter !== '') {
+            $data['program'] = $this->mpp_model->getProgramsByStatus($status_filter);
+        } else {
+            $data['program'] = $this->mpp_model->getAllPrograms();
+        }
 
         $this->load->view('templates_mpp/header', $data);
         $this->load->view('templates_mpp/sidebar', $data);
-        $this->load->view('mpp', $data);
+        $this->load->view('penasihat', $data);
         $this->load->view('templates_mpp/footer');
-        var_dump($this->session->userdata('role'));
     }
 
     // Approve program to the database

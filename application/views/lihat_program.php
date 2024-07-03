@@ -77,6 +77,8 @@
                             <?= htmlspecialchars($prog->NOTA_MPP) ?><br><br>
                             <strong>Nota HEPA:</strong><br>
                             <?= htmlspecialchars($prog->NOTA_HEPA) ?><br><br>
+                            <strong>Sebab Tolak Program:</strong><br>
+                            <?= htmlspecialchars($prog->PROGRAM_NOTES) ?><br><br>
                         <?php else : ?>
                             <?= htmlspecialchars($prog->PROGRAM_NOTES) ?>
                         <?php endif; ?>

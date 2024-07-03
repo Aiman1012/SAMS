@@ -211,6 +211,9 @@
         </tr>
     </table>
     <a href="<?= site_url('hepa/cetak/' . $program->PROGRAM_ID) ?>" class="btn btn-primary">Cetak</a>
+    <a href="<?= base_url('hepa/approveProgram/' . $program->PROGRAM_ID) ?>" class="btn btn-danger btn-sm ml-auto">
+        <i class="fas fa-back"></i> Go Back
+    </a>
 <?php else : ?>
     <p>No program details found.</p>
 <?php endif; ?>

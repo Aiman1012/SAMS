@@ -158,9 +158,11 @@
                 <a href="<?= base_url('hepa') ?>" class="btn btn-danger btn-sm ml-auto">
                     <i class="fas fa-back"></i> Go Back
                 </a>
-                <a href="<?= base_url('hepa/programDetails/' . $prog->PROGRAM_ID) ?>" class="btn btn-primary btn-sm ml-auto">
-                    <i class="fas fa-back"></i> View Program Details
-                </a>
+                <?php if ($prog->APPROVAL_STATUS == 'Approved') : ?>
+                    <a href="<?= base_url('hepa/programDetails/' . $prog->PROGRAM_ID) ?>" class="btn btn-primary btn-sm ml-auto">
+                        <i class="fas fa-back"></i> View Program Details
+                    </a>
+                <?php endif; ?>
             <?php endif; ?>
         </h3>
     </div>

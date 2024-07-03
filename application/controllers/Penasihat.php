@@ -18,14 +18,21 @@ class Penasihat extends CI_Controller
         $data['title'] = 'Penasihat Kelab';
         $data['pageName'] = 'Senarai Program';
 
-        $data['program'] = $this->penasihat_model->getData('TBL_PROGRAM')->result();
+        $status_filter = $this->input->get('status_filter');
+
+        // Fetch the programs based on the status filter
+        if ($status_filter) {
+            $data['program'] = $this->Program_model->getProgramsByStatus($status_filter);
+        } else {
+            $data['program'] = $this->Program_model->getAllPrograms();
+        }
 
         $this->load->view('templates_penasihat/header', $data);
         $this->load->view('templates_penasihat/sidebar', $data);
         $this->load->view('penasihat', $data);
         $this->load->view('templates_penasihat/footer');
-        var_dump($this->session->userdata('role'));
     }
+
 
     // Approve program to the database
     public function approveProgram($PROGRAM_ID)

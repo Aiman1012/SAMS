@@ -217,7 +217,7 @@ class Hepa extends CI_Controller
             if ($this->hepa_model->approveProgram($data)) {
                 log_message('debug', 'Data successfully inserted into the database.');
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Program approved successfully!</div>');
-                redirect('hepa/approveProgramForm/' . $data['PROGRAM_ID']);
+                redirect('hepa/programDetails/' . $data['PROGRAM_ID']);
             } else {
                 log_message('error', 'Failed to insert data into the database.');
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Failed to approve the program. Please try again.</div>');

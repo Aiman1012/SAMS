@@ -15,12 +15,15 @@
             <div class="row mb-3">
                 <div class="col-md-3">
                     <select name="status_filter" class="form-control">
-                        <option value="" <?= !isset($_GET['status_filter']) ? 'selected' : '' ?>>All</option>
-                        <option value="APPROVED" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'APPROVED') ? 'selected' : '' ?>>Approved</option>
-                        <option value="CANCELLED" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'CANCELLED') ? 'selected' : '' ?>>Cancelled</option>
-                        <option value="PENDING" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING') ? 'selected' : '' ?>>Pending</option>
-                        <option value="PENDING HEPA APPROVAL" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING HEPA APPROVAL') ? 'selected' : '' ?>>Pending HEPA Approval</option>
-                        <option value="PENDING MPP APPROVAL" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING MPP APPROVAL') ? 'selected' : '' ?>>Pending MPP Approval</option>
+                        <option value="All" <?= !isset($_GET['status_filter']) ? 'selected' : 'All' ?>>All</option>
+                        <option value="Approved" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'APPROVED' || 'Approved') ? 'selected' : '' ?>>Approved</option>
+                        <option value="Cancelled" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'CANCELLED' || 'Cancelled') ? 'selected' : '' ?>>Cancelled</option>
+
+                        <option value="Pending" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING' || 'Pending') ? 'selected' : '' ?>>Pending</option>
+                        <option value="Pending Hepa Approval" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING HEPA APPROVAL' ||  'Pending HEPA Approval') ? 'selected' : '' ?>>Pending HEPA Approval</option>
+
+                        <option value="Pending MPP Approval" <?= (isset($_GET['status_filter']) && $_GET['status_filter'] == 'PENDING MPP APPROVAL' || 'Pending MPP Approval') ? 'selected' : '' ?>>Pending MPP Approval</option>
+
                     </select>
 
                 </div>
