@@ -52,7 +52,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h2>Program Details</h2>
+            <h2>SYARAT-SYARAT KELULUSAN AKTIVITI BADAN PELAJAR</h2>
         </div>
         <div class="content">
             <table>
@@ -61,23 +61,19 @@
                     <td><?= htmlspecialchars($program->NAMA_PROGRAM) ?></td>
                 </tr>
                 <tr>
-                    <th>Nama Kelab</th>
+                    <th>Anjuran/Penyertaan</th>
                     <td><?= htmlspecialchars($program->NAMA_KELAB) ?></td>
                 </tr>
                 <tr>
-                    <th>Nama Pengarah</th>
-                    <td><?= htmlspecialchars($program->NAMA_PENGARAH) ?></td>
-                </tr>
-                <tr>
-                    <th>Anjuran / Penyertaan</th>
+                    <th>Anjuran Bersama</th>
                     <td><?= htmlspecialchars($program->NAMA_ANJURAN) ?></td>
                 </tr>
                 <tr>
-                    <th>Kategori Program</th>
-                    <td><?= htmlspecialchars($program->KATEGORI_PROGRAM) ?></td>
+                    <th>Dengan Kerjasama</th>
+                    <td><?= htmlspecialchars($program->NAMA_ANJURAN) ?></td>
                 </tr>
                 <tr>
-                    <th>Tarikh Mula Program</th>
+                    <th>Tarikh Mula Pelaksanaan Program</th>
                     <td><?= htmlspecialchars($program->TARIKH_MULA) ?></td>
                 </tr>
                 <?php if (!empty($program->TARIKH_TAMAT)) : ?>
@@ -86,42 +82,55 @@
                         <td><?= htmlspecialchars($program->TARIKH_TAMAT) ?></td>
                     </tr>
                 <?php endif; ?>
-                <tr>
-                    <th>Objektif Program</th>
-                    <td><?= htmlspecialchars($program->OBJEKTIF_PROGRAM) ?></td>
-                </tr>
+                <?php if (!empty($program->MASA_PROGRAM)) : ?>
+                    <tr>
+                        <th>Masa Program</th>
+                        <td><?= htmlspecialchars($program->MASA_PROGRAM) ?></td>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th>Tempat Program</th>
                     <td><?= htmlspecialchars($program->TEMPAT_PROGRAM) ?></td>
-                </tr>
-                <tr>
-                    <th>Objektif Program</th>
-                    <td><?= htmlspecialchars($program->OBJEKTIF_PROGRAM) ?></td>
-                </tr>
-                <tr>
-                    <th>Masa Program</th>
-                    <td><?= htmlspecialchars($program->MASA_PROGRAM) ?></td>
-                </tr>
-                <tr>
-                    <th>Negeri Program</th>
-                    <td><?= htmlspecialchars($program->NEGERI_PROGRAM) ?></td>
-                </tr>
-                <tr>
-                    <th>Tempat</th>
-                    <td><?= htmlspecialchars($program->TEMPAT) ?></td>
                 </tr>
                 <tr>
                     <th>Kos Program</th>
                     <td><?= htmlspecialchars($program->KOS_PROGRAM) ?></td>
                 </tr>
                 <tr>
-                    <th>Penyertaan Program</th>
-                    <td><?= htmlspecialchars($program->PENYERTAAN_PROGRAM) ?></td>
+                    <th>Kategori Program</th>
+                    <td><?= htmlspecialchars($program->KATEGORI_PROGRAM) ?></td>
                 </tr>
                 <tr>
                     <th>Objektif Program</th>
-                    <td><?= nl2br(htmlspecialchars($program->OBJEKTIF_PROGRAM)) ?></td>
+                    <td><?= htmlspecialchars($program->OBJEKTIF_PROGRAM) ?></td>
                 </tr>
+
+
+                <tr>
+                    <th>Kewangan HEPA</th>
+                    <td><?= htmlspecialchars($program->PERUNTUKAN_KEWANGAN_HEPA) ?></td>
+                </tr>
+                <tr>
+                    <th>Dana Tabung Amanah</th>
+                    <td><?= htmlspecialchars($program->DANA_TABUNG_AMANAH) ?></td>
+                </tr>
+                <tr>
+                    <th>Permohonan Sijil HEPA</th>
+                    <td><?= htmlspecialchars($program->BILANGAN_SIJIL_TNC_HEPA) ?></td>
+                </tr>
+                <tr>
+                    <th>Permohonan Sijil PPHKP</th>
+                    <td><?= htmlspecialchars($program->BILANGAN_SIJIL_PENGARAH_PPHKP) ?></td>
+                </tr>
+                <tr>
+                    <th>Penyertaan Program</th>
+                    <td><?= htmlspecialchars($program->KUTIPAN_YURAN_PESERTA) ?></td>
+                </tr>
+                <tr>
+                    <th>Kelulusan Kenderaan Universiti</th>
+                    <td><?= htmlspecialchars($program->KENDERAAN_UNIVERSITI) ?></td>
+                </tr>
+                <!-- Senarai Pegawai Pengiring -->
                 <!-- Add other necessary fields similarly -->
             </table>
             <div class="footer">

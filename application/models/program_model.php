@@ -48,4 +48,14 @@ class program_model extends CI_Model
         $query = $this->db->get('TBL_PROGRAM');
         return $query->result();
     }
+
+    public function get_program_details($PROGRAM_ID)
+    {
+        $this->db->select('TBL_PROGRAM.*, TBL_SURAT_HEPA.*');
+        $this->db->from('TBL_PROGRAM');
+        $this->db->join('TBL_SURAT_HEPA', 'TBL_PROGRAM.PROGRAM_ID = TBL_SURAT_HEPA.PROGRAM_ID', 'left');
+        $this->db->where('TBL_PROGRAM.PROGRAM_ID', $PROGRAM_ID);
+        $query = $this->db->get();
+        return $query->row();
+    }
 }

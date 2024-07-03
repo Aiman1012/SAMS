@@ -92,6 +92,9 @@
             <a href="<?= base_url('presiden') ?>" class="btn btn-danger btn-sm">
                 <i class="fas fa-back"></i> Go Back
             </a>
+            <a href="<?= base_url('hepa/cetak/' . $program[0]->PROGRAM_ID) ?>" class="btn btn-primary btn-sm">
+                <i class="fas fa-print"></i> Cetak
+            </a>
         </h3>
     </div>
 </div>

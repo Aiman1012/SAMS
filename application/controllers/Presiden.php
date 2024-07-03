@@ -55,6 +55,7 @@ class Presiden extends CI_Controller
 
 
 
+
     public function mohonProgram()
     {
         $data['title'] = 'Mohon Program';
